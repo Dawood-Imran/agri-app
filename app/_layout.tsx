@@ -34,6 +34,7 @@ export default function RootLayout() {
         <Stack.Screen name="SignIn" options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" options={{ headerShown: false }} />
         <Stack.Screen name="farmer/dashboard" options={{ headerShown: false }} />
+        <Stack.Screen name="expert/dashboard" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );

@@ -14,6 +14,8 @@ const SignIn = () => {
   const handleSignIn = () => {
     if (userType.toLowerCase() === 'farmer') {
       router.replace('/farmer/dashboard');
+    } else if (userType.toLowerCase() === 'expert') {
+      router.replace('/expert/dashboard');
     } else {
       // Handle other user types
       router.replace(`/${userType.toLowerCase()}Dashboard` as any);
