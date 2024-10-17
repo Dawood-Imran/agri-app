@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC107',
     paddingVertical: 15,
     borderRadius: 25,
+    // Removed shadow properties
   },
   buttonTitle: {
     color: '#1B5E20',
@@ -161,7 +162,6 @@ const styles = StyleSheet.create({
   },
   signInHighlight: {
     color: '#FFC107',
-    textDecorationLine: 'underline',
   },
   backButton: {
     position: 'absolute',

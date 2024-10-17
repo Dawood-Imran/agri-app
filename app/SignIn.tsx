@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, Link } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
@@ -12,9 +12,12 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
 
   const handleSignIn = () => {
-    // Here you would typically handle authentication
-    // For now, we'll just navigate to the appropriate dashboard
-    router.replace(`/${userType.toLowerCase()}Dashboard` as any);
+    if (userType.toLowerCase() === 'farmer') {
+      router.replace('/farmer/dashboard');
+    } else {
+      // Handle other user types
+      router.replace(`/${userType.toLowerCase()}Dashboard` as any);
+    }
   };
 
   const handleBack = () => {
@@ -127,6 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC107',
     paddingVertical: 15,
     borderRadius: 25,
+    // Removed shadow properties
   },
   buttonTitle: {
     color: '#1B5E20',
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
   },
   signUpHighlight: {
     color: '#FFC107',
-    textDecorationLine: 'underline',
+    // Removed textDecorationLine: 'underline',
   },
   backButton: {
     position: 'absolute',
