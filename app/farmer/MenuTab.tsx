@@ -31,6 +31,7 @@ const MenuTab = () => {
     { name: 'Expert Consultation', icon: 'video' },
     { name: 'Buy Coins', icon: 'coins' },
     { name: 'Auction System', icon: 'gavel' },
+    { name: 'Field Details', icon: 'seedling' },
   ];
 
   return (

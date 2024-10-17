@@ -19,12 +19,20 @@ const FarmerDashboard = () => {
             iconName = focused ? 'person' : 'person-outline';
           }
 
-          return <Icon name={iconName} type="ionicon" size={size} color={color} />;
+          return <Icon name={iconName as string} type="ionicon" size={size} color={color} />;
         },
         tabBarActiveTintColor: '#FFC107',
         tabBarInactiveTintColor: '#FFFFFF',
         tabBarStyle: {
           backgroundColor: '#61B15A',
+        },
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: '#61B15A',
+        },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: {
+          fontWeight: 'bold',
         },
       })}
     >
