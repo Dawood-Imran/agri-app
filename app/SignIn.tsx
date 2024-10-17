@@ -17,11 +17,21 @@ const SignIn = () => {
     router.replace(`/${userType.toLowerCase()}Dashboard` as any);
   };
 
+  const handleBack = () => {
+    router.back(); // This will navigate back to the UserSelectionScreen
+  };
+
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>
-        Sign In as {userType}
-      </ThemedText>
+      <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+        <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
+      </TouchableOpacity>
+      <View style={styles.titleContainer}>
+        <ThemedText style={styles.titleMain}>Sign In</ThemedText>
+        <ThemedText style={styles.titleSub}>
+          as <ThemedText style={styles.userType}>{userType}</ThemedText>
+        </ThemedText>
+      </View>
       <View style={styles.form}>
         <Input
           placeholder="Email"
@@ -53,7 +63,9 @@ const SignIn = () => {
         />
       </View>
       <TouchableOpacity onPress={() => router.push({ pathname: '/SignUp', params: { userType } })}>
-        <ThemedText style={styles.signUpText}>Don't have an account? Sign Up</ThemedText>
+        <ThemedText style={styles.signUpText}>
+          Don't have an account? <ThemedText style={styles.signUpHighlight}>Sign Up</ThemedText>
+        </ThemedText>
       </TouchableOpacity>
     </ThemedView>
   );
@@ -65,13 +77,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#61B15A', // Same as UserSelectionScreen
+    backgroundColor: '#61B15A',
   },
-  title: {
+  titleContainer: {
     marginBottom: 40,
-    fontSize: 24,
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingTop: 30, // Increase padding at the top to avoid cutting off text
+  },
+  titleMain: {
+    fontSize: 36,
     color: '#FFFFFF',
     fontWeight: 'bold',
+    marginBottom: 10,
+    lineHeight: 42,
+  },
+  titleSub: {
+    fontSize: 28,
+    color: '#FFFFFF',
+    marginTop: 5,
+  },
+  userType: {
+    color: '#FFC107',
+    fontWeight: 'bold',
+    fontSize: 32,
+    marginTop: 5,
+    paddingVertical: 5,
+    lineHeight: 38,
   },
   form: {
     width: '100%',
@@ -92,17 +124,39 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: '#FFC107', // Same as continue button
+    backgroundColor: '#FFC107',
     paddingVertical: 15,
     borderRadius: 25,
   },
   buttonTitle: {
-    color: '#1B5E20', // Dark green color for button text
+    color: '#1B5E20',
     fontWeight: 'bold',
+    fontSize: 20,
   },
   signUpText: {
     color: '#FFFFFF',
+    marginTop: 20, // Add margin to give space between form and Sign Up text
+  },
+  signUpHighlight: {
+    color: '#FFC107',
     textDecorationLine: 'underline',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 1,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 
