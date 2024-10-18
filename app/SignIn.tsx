@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
@@ -9,21 +9,41 @@ import { useTranslation } from 'react-i18next';
 const SignIn = () => {
   const { userType } = useLocalSearchParams<{ userType: string }>();
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const { t, i18n } = useTranslation();
 
   const isRTL = i18n.language === 'ur';
 
+  const validateForm = () => {
+    if (!phoneNumber.trim()) {
+      Alert.alert(t('error'), t('phoneNumberRequired'));
+      return false;
+    }
+    if (!/^\d{10,}$/.test(phoneNumber.trim())) {
+      Alert.alert(t('error'), t('invalidPhoneNumber'));
+      return false;
+    }
+    if (!password.trim()) {
+      Alert.alert(t('error'), t('passwordRequired'));
+      return false;
+    }
+    return true;
+  };
+
   const handleSignIn = () => {
-    if (userType.toLowerCase() === 'farmer') {
-      router.replace('/farmer/dashboard');
-    } else if (userType.toLowerCase() === 'expert') {
-      router.replace('/expert/dashboard');
-    } else if (userType.toLowerCase() === 'buyer') {
-      router.replace('/buyer/dashboard');
-    } else {
-      router.replace(`/${userType.toLowerCase()}Dashboard` as any);
+    if (validateForm()) {
+      // Here you would typically handle authentication
+      // For now, we'll just navigate to the appropriate dashboard
+      if (userType.toLowerCase() === 'farmer') {
+        router.replace('/farmer/dashboard');
+      } else if (userType.toLowerCase() === 'expert') {
+        router.replace('/expert/dashboard');
+      } else if (userType.toLowerCase() === 'buyer') {
+        router.replace('/buyer/dashboard');
+      } else {
+        router.replace(`/${userType.toLowerCase()}Dashboard` as any);
+      }
     }
   };
 
@@ -44,13 +64,12 @@ const SignIn = () => {
       </View>
       <View style={styles.form}>
         <Input
-          placeholder={t('email')}
-          onChangeText={setEmail}
-          value={email}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          leftIcon={isRTL ? undefined : <Icon name="email" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="email" type="material" color="#FFFFFF" /> : undefined}
+          placeholder={t('phoneNumber')}
+          onChangeText={setPhoneNumber}
+          value={phoneNumber}
+          keyboardType="phone-pad"
+          leftIcon={isRTL ? undefined : <Icon name="phone" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="phone" type="material" color="#FFFFFF" /> : undefined}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"

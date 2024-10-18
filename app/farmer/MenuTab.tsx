@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { Card, Text, Icon } from 'react-native-elements';
 import { ThemedView } from '../../components/ThemedView';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 
 const API_KEY = "33e96491c93c4bb88bc130136241209";  // Replace with your WeatherAPI key
 const BASE_URL = "http://api.weatherapi.com/v1/current.json";
 
 const MenuTab = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -86,11 +88,11 @@ const MenuTab = () => {
   };
 
   const features = [
-    { name: t('yieldPrediction'), icon: 'chart-line' },
-    { name: t('expertConsultation'), icon: 'video' },
-    { name: t('buyCoins'), icon: 'coins' },
-    { name: t('auctionSystem'), icon: 'gavel' },
-    { name: t('fieldDetails'), icon: 'seedling' },
+    { name: t('yieldPrediction'), icon: 'chart-line', route: '/farmer/YieldPrediction' },
+    { name: t('expertConsultation'), icon: 'video', route: '/farmer/ExpertConsultation' },
+    { name: t('buyCoins'), icon: 'coins', route: '/farmer/BuyCoins' },
+    { name: t('auctionSystem'), icon: 'gavel', route: '/farmer/AuctionSystem' },
+    { name: t('fieldDetails'), icon: 'seedling', route: '/farmer/FieldDetails' },
   ];
 
   return (
@@ -123,10 +125,12 @@ const MenuTab = () => {
           )}
         </Card>
         {features.map((feature, index) => (
-          <Card key={index} containerStyle={styles.featureCard}>
-            <Icon name={feature.icon} type="font-awesome-5" size={30} color="#61B15A" />
-            <Text style={styles.featureText}>{feature.name}</Text>
-          </Card>
+          <TouchableOpacity key={index} onPress={() => router.push(feature.route)}>
+            <Card containerStyle={styles.featureCard}>
+              <Icon name={feature.icon} type="font-awesome-5" size={30} color="#61B15A" />
+              <Text style={styles.featureText}>{feature.name}</Text>
+            </Card>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </ThemedView>

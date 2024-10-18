@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
@@ -10,18 +10,44 @@ const SignUp = () => {
   const { userType } = useLocalSearchParams<{ userType: string }>();
   const router = useRouter();
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { t, i18n } = useTranslation();
 
   const isRTL = i18n.language === 'ur';
 
+  const validateForm = () => {
+    if (!name.trim()) {
+      Alert.alert(t('error'), t('nameRequired'));
+      return false;
+    }
+    if (!phoneNumber.trim()) {
+      Alert.alert(t('error'), t('phoneNumberRequired'));
+      return false;
+    }
+    if (!/^\d{10,}$/.test(phoneNumber.trim())) {
+      Alert.alert(t('error'), t('invalidPhoneNumber'));
+      return false;
+    }
+    if (!password.trim()) {
+      Alert.alert(t('error'), t('passwordRequired'));
+      return false;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert(t('error'), t('passwordsMustMatch'));
+      return false;
+    }
+    return true;
+  };
+
   const handleSignUp = () => {
-    // Here you would typically handle user registration
-    // For now, we'll just show an alert and navigate to the SignIn screen
-    alert('Account created successfully. You can now sign in.');
-    router.replace({ pathname: '/SignIn', params: { userType } });
+    if (validateForm()) {
+      // Here you would typically handle user registration
+      // For now, we'll just show an alert and navigate to the SignIn screen
+      alert(t('accountCreatedSuccessfully'));
+      router.replace({ pathname: '/SignIn', params: { userType } });
+    }
   };
 
   const handleBack = () => {
@@ -44,20 +70,19 @@ const SignUp = () => {
           placeholder={t('name')}
           onChangeText={setName}
           value={name}
-          leftIcon={isRTL ? null : <Icon name="person" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="person" type="material" color="#FFFFFF" /> : null}
+          leftIcon={isRTL ? undefined : <Icon name="person" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="person" type="material" color="#FFFFFF" /> : undefined}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder={t('email')}
-          onChangeText={setEmail}
-          value={email}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          leftIcon={isRTL ? null : <Icon name="email" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="email" type="material" color="#FFFFFF" /> : null}
+          placeholder={t('phoneNumber')}
+          onChangeText={setPhoneNumber}
+          value={phoneNumber}
+          keyboardType="phone-pad"
+          leftIcon={isRTL ? undefined : <Icon name="phone" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="phone" type="material" color="#FFFFFF" /> : undefined}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
@@ -67,8 +92,8 @@ const SignUp = () => {
           onChangeText={setPassword}
           value={password}
           secureTextEntry
-          leftIcon={isRTL ? null : <Icon name="lock" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : null}
+          leftIcon={isRTL ? undefined : <Icon name="lock" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : undefined}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
@@ -78,8 +103,8 @@ const SignUp = () => {
           onChangeText={setConfirmPassword}
           value={confirmPassword}
           secureTextEntry
-          leftIcon={isRTL ? null : <Icon name="lock" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : null}
+          leftIcon={isRTL ? undefined : <Icon name="lock" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : undefined}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"

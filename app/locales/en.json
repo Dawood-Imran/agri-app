@@ -30,5 +30,13 @@
   "as": "as",
   "dontHaveAccount": "Don't have an account?",
   "alreadyHaveAccount": "Already have an account?",
-  "createAccount": "Create Account"
+  "createAccount": "Create Account",
+  "phoneNumber": "Phone Number",
+  "error": "Error",
+  "nameRequired": "Name is required",
+  "phoneNumberRequired": "Phone number is required",
+  "invalidPhoneNumber": "Invalid phone number format",
+  "passwordRequired": "Password is required",
+  "passwordsMustMatch": "Passwords must match",
+  "accountCreatedSuccessfully": "Account created successfully. You can now sign in."
 }

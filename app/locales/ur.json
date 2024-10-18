@@ -31,5 +31,13 @@
   "as": "بطور",
   "dontHaveAccount": "اکاؤنٹ نہیں ہے؟",
   "alreadyHaveAccount": "پہلے سے اکاؤنٹ ہے؟",
-  "createAccount": "اکاؤنٹ بنائیں"
+  "createAccount": "اکاؤنٹ بنائیں",
+  "phoneNumber": "فون نمبر",
+  "error": "خرابی",
+  "nameRequired": "نام درکار ہے",
+  "phoneNumberRequired": "فون نمبر درکار ہے",
+  "invalidPhoneNumber": "غلط فون نمبر کی شکل",
+  "passwordRequired": "پاس ورڈ درکار ہے",
+  "passwordsMustMatch": "پاس ورڈز کا میل کھانا ضروری ہے",
+  "accountCreatedSuccessfully": "اکاؤنٹ کامیابی سے بن گیا ہے۔ اب آپ سائن ان کر سکتے ہیں۔"
 }

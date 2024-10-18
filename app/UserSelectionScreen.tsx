@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'react-native-elements';
+import { Picker } from '@react-native-picker/picker';
 
 const UserSelectionScreen = () => {
   const router = useRouter();
@@ -14,19 +14,23 @@ const UserSelectionScreen = () => {
     router.push({ pathname: '/SignIn', params: { userType } });
   };
 
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'ur' : 'en');
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
   };
 
   return (
     <ThemedView style={styles.container}>
-      <Button
-        title={t('changeLanguage')}
-        onPress={toggleLanguage}
-        containerStyle={styles.languageButton}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitleStyle}
-      />
+      <View style={styles.languagePickerContainer}>
+        <Picker
+          selectedValue={i18n.language}
+          onValueChange={(itemValue) => changeLanguage(itemValue)}
+          style={styles.languagePicker}
+          dropdownIconColor="#FFC107"
+        >
+          <Picker.Item label="English" value="en" />
+          <Picker.Item label="اردو" value="ur" />
+        </Picker>
+      </View>
       <Image 
         source={require('../assets/Logo maker project (3)_processed.png')} 
         style={styles.logo}
@@ -35,17 +39,17 @@ const UserSelectionScreen = () => {
       <ThemedText style={styles.questionText}>{t('andYouAre')}</ThemedText>
       <View style={styles.buttonContainer}>
         {[
-          { type: 'farmer', icon: require('../assets/images/farmer.png') },
-          { type: 'expert', icon: require('../assets/images/badge.png') },
-          { type: 'buyer', icon: require('../assets/images/investor.png') },
+          { type: 'Farmer', icon: require('../assets/images/farmer.png') },
+          { type: 'Expert', icon: require('../assets/images/badge.png') },
+          { type: 'Buyer', icon: require('../assets/images/investor.png') },
         ].map((user) => (
           <TouchableOpacity
             key={user.type}
             style={styles.button}
-            onPress={() => handleUserSelection(user.type as 'farmer' | 'expert' | 'buyer')}
+            onPress={() => handleUserSelection(user.type as 'Farmer' | 'Expert' | 'Buyer')}
           >
             <Image source={user.icon} style={styles.icon} />
-            <ThemedText style={styles.buttonText}>{t(user.type)}</ThemedText>
+            <ThemedText style={styles.buttonText}>{t(user.type.toLowerCase())}</ThemedText>
           </TouchableOpacity>
         ))}
       </View>
@@ -60,6 +64,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#61B15A',
     padding: 20,
+  },
+  languagePickerContainer: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    overflow: 'hidden',
+  },
+  languagePicker: {
+    width: 150, // Reduced from 150
+    height: 10, // Reduced from 40
+    color: '#FFC107',
+    fontSize: 14, // Added to make the text smaller
   },
   logo: {
     width: 400,
@@ -104,19 +122,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  languageButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
-    zIndex: 1,
-  },
-  buttonStyle: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 5,
-  },
-  buttonTitleStyle: {
-    color: '#FFC107',
   },
 });
 

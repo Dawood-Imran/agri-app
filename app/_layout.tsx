@@ -5,6 +5,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import '../i18n'; // Import the i18n configuration
+import { Icon } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -16,6 +20,8 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (loaded) {
@@ -26,6 +32,19 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+
+  const headerLeft = () => (
+    <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+      <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
+    </TouchableOpacity>
+  );
+
+  const commonHeaderOptions = {
+    headerLeft,
+    headerStyle: { backgroundColor: '#61B15A' },
+    headerTintColor: '#FFFFFF',
+    headerTitleStyle: { fontWeight: 'bold' },
+  };
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
@@ -38,7 +57,48 @@ export default function RootLayout() {
         <Stack.Screen name="farmer/dashboard" options={{ headerShown: false }} />
         <Stack.Screen name="expert/dashboard" options={{ headerShown: false }} />
         <Stack.Screen name="buyer/dashboard" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="farmer/YieldPrediction" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('yieldPrediction'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/ExpertConsultation" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('expertConsultation'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/BuyCoins" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('buyCoins'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/AuctionSystem" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('auctionSystem'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/FieldDetails" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('fieldDetails'),
+          }} 
+        />
       </Stack>
     </ThemeProvider>
   );
 }
+
+const styles = {
+  backButton: {
+    marginLeft: 10,
+  },
+};
