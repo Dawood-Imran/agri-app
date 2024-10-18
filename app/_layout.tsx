@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import '../i18n'; // Import the i18n configuration
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -30,6 +31,7 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="LanguageSelection" options={{ headerShown: false }} />
         <Stack.Screen name="UserSelectionScreen" options={{ headerShown: false }} />
         <Stack.Screen name="SignIn" options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" options={{ headerShown: false }} />

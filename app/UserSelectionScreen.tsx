@@ -1,88 +1,54 @@
-import React, { useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View, Image, Animated } from 'react-native';
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
+import { useTranslation } from 'react-i18next';
+import { Button } from 'react-native-elements';
 
 const UserSelectionScreen = () => {
   const router = useRouter();
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(100)).current;
-  const scaleAnim = useRef(new Animated.Value(0.5)).current;
-  const textFadeAnim = useRef(new Animated.Value(0)).current;
-  const textSlideAnim = useRef(new Animated.Value(50)).current;
-
-  useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        friction: 4,
-        useNativeDriver: true,
-      }),
-      Animated.timing(textFadeAnim, {
-        toValue: 1,
-        duration: 1000,
-        delay: 500,
-        useNativeDriver: true,
-      }),
-      Animated.timing(textSlideAnim, {
-        toValue: 0,
-        duration: 800,
-        delay: 500,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, []);
+  const { t, i18n } = useTranslation();
 
   const handleUserSelection = (userType: 'Farmer' | 'Expert' | 'Buyer') => {
     router.push({ pathname: '/SignIn', params: { userType } });
   };
 
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'en' ? 'ur' : 'en');
+  };
+
   return (
     <ThemedView style={styles.container}>
-      <Animated.Image 
-        source={require('../assets/Logo maker project (3)_processed.png')} 
-        style={[
-          styles.logo, 
-          { 
-            opacity: fadeAnim,
-            transform: [{ scale: scaleAnim }]
-          }
-        ]}
+      <Button
+        title={t('changeLanguage')}
+        onPress={toggleLanguage}
+        containerStyle={styles.languageButton}
+        buttonStyle={styles.buttonStyle}
+        titleStyle={styles.buttonTitleStyle}
       />
-      <Animated.View style={{
-        opacity: textFadeAnim,
-        transform: [{ translateY: textSlideAnim }]
-      }}>
-        <ThemedText style={styles.welcomeText}>WELCOME</ThemedText>
-        <ThemedText style={styles.questionText}>AND YOU ARE?</ThemedText>
-      </Animated.View>
-      <Animated.View style={[styles.buttonContainer, { transform: [{ translateY: slideAnim }] }]}>
+      <Image 
+        source={require('../assets/Logo maker project (3)_processed.png')} 
+        style={styles.logo}
+      />
+      <ThemedText style={styles.welcomeText}>{t('welcome')}</ThemedText>
+      <ThemedText style={styles.questionText}>{t('andYouAre')}</ThemedText>
+      <View style={styles.buttonContainer}>
         {[
-          { type: 'Farmer', icon: require('../assets/images/farmer.png') },
-          { type: 'Expert', icon: require('../assets/images/badge.png') },
-          { type: 'Buyer', icon: require('../assets/images/investor.png') },
+          { type: 'farmer', icon: require('../assets/images/farmer.png') },
+          { type: 'expert', icon: require('../assets/images/badge.png') },
+          { type: 'buyer', icon: require('../assets/images/investor.png') },
         ].map((user) => (
           <TouchableOpacity
             key={user.type}
             style={styles.button}
-            onPress={() => handleUserSelection(user.type as 'Farmer' | 'Expert' | 'Buyer')}
+            onPress={() => handleUserSelection(user.type as 'farmer' | 'expert' | 'buyer')}
           >
             <Image source={user.icon} style={styles.icon} />
-            <ThemedText style={styles.buttonText}>{user.type.toUpperCase()}</ThemedText>
+            <ThemedText style={styles.buttonText}>{t(user.type)}</ThemedText>
           </TouchableOpacity>
         ))}
-      </Animated.View>
+      </View>
     </ThemedView>
   );
 };
@@ -126,6 +92,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
+    width: '30%',
   },
   icon: {
     width: 80,
@@ -136,6 +103,20 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  languageButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    zIndex: 1,
+  },
+  buttonStyle: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+  },
+  buttonTitleStyle: {
+    color: '#FFC107',
   },
 });
 

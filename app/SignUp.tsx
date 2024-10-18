@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
   const { userType } = useLocalSearchParams<{ userType: string }>();
@@ -12,6 +13,9 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { t, i18n } = useTranslation();
+
+  const isRTL = i18n.language === 'ur';
 
   const handleSignUp = () => {
     // Here you would typically handle user registration
@@ -21,7 +25,7 @@ const SignUp = () => {
   };
 
   const handleBack = () => {
-    router.back(); // This will navigate back to the SignIn screen
+    router.back();
   };
 
   return (
@@ -30,54 +34,58 @@ const SignUp = () => {
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
       </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleMain}>Sign Up</ThemedText>
+        <ThemedText style={styles.titleMain}>{t('createAccount')}</ThemedText>
         <ThemedText style={styles.titleSub}>
-          as <ThemedText style={styles.userType}>{userType}</ThemedText>
+          {t('as')} <ThemedText style={styles.userType}>{t(userType.toLowerCase())}</ThemedText>
         </ThemedText>
       </View>
       <View style={styles.form}>
         <Input
-          placeholder="Name"
+          placeholder={t('name')}
           onChangeText={setName}
           value={name}
-          leftIcon={<Icon name="person" type="material" color="#FFFFFF" />}
+          leftIcon={isRTL ? null : <Icon name="person" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="person" type="material" color="#FFFFFF" /> : null}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.inputText}
+          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder="Email"
+          placeholder={t('email')}
           onChangeText={setEmail}
           value={email}
           keyboardType="email-address"
           autoCapitalize="none"
-          leftIcon={<Icon name="email" type="material" color="#FFFFFF" />}
+          leftIcon={isRTL ? null : <Icon name="email" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="email" type="material" color="#FFFFFF" /> : null}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.inputText}
+          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder="Password"
+          placeholder={t('password')}
           onChangeText={setPassword}
           value={password}
           secureTextEntry
-          leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
+          leftIcon={isRTL ? null : <Icon name="lock" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : null}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.inputText}
+          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder="Confirm Password"
+          placeholder={t('confirmPassword')}
           onChangeText={setConfirmPassword}
           value={confirmPassword}
           secureTextEntry
-          leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
+          leftIcon={isRTL ? null : <Icon name="lock" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : null}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.inputText}
+          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Button
-          title="Sign Up"
+          title={t('createAccount')}
           onPress={handleSignUp}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
@@ -86,7 +94,7 @@ const SignUp = () => {
       </View>
       <TouchableOpacity onPress={() => router.push({ pathname: '/SignIn', params: { userType } })}>
         <ThemedText style={styles.signInText}>
-          Already have an account? <ThemedText style={styles.signInHighlight}>Sign In</ThemedText>
+          {t('alreadyHaveAccount')} <ThemedText style={styles.signInHighlight}>{t('signIn')}</ThemedText>
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
@@ -179,6 +187,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  rtlText: {
+    textAlign: 'right',
   },
 });
 

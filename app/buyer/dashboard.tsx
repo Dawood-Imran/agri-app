@@ -1,25 +1,28 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
 import AuctionSystemTab from './AuctionSystemTab';
 import AccountTab from './AccountTab';
 
 const Tab = createBottomTabNavigator();
 
 const BuyerDashboard = () => {
+  const { t } = useTranslation();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Auction System') {
+          if (route.name === t('auctionSystem')) {
             iconName = focused ? 'gavel' : 'gavel';
-          } else if (route.name === 'Account') {
+          } else if (route.name === t('account')) {
             iconName = focused ? 'person' : 'person-outline';
           }
 
-          return <Icon name={iconName as string} type={route.name === 'Auction System' ? 'font-awesome-5' : 'ionicon'} size={size} color={color} />;
+          return <Icon name={iconName as string} type={route.name === t('auctionSystem') ? 'font-awesome-5' : 'ionicon'} size={size} color={color} />;
         },
         tabBarActiveTintColor: '#FFC107',
         tabBarInactiveTintColor: '#FFFFFF',
@@ -36,8 +39,8 @@ const BuyerDashboard = () => {
         },
       })}
     >
-      <Tab.Screen name="Auction System" component={AuctionSystemTab} />
-      <Tab.Screen name="Account" component={AccountTab} />
+      <Tab.Screen name={t('auctionSystem')} component={AuctionSystemTab} />
+      <Tab.Screen name={t('account')} component={AccountTab} />
     </Tab.Navigator>
   );
 };

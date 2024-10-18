@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useLocalSearchParams, useRouter, Link } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
+import { useTranslation } from 'react-i18next';
 
 const SignIn = () => {
   const { userType } = useLocalSearchParams<{ userType: string }>();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { t, i18n } = useTranslation();
+
+  const isRTL = i18n.language === 'ur';
 
   const handleSignIn = () => {
     if (userType.toLowerCase() === 'farmer') {
@@ -19,13 +23,12 @@ const SignIn = () => {
     } else if (userType.toLowerCase() === 'buyer') {
       router.replace('/buyer/dashboard');
     } else {
-      // Handle other user types
       router.replace(`/${userType.toLowerCase()}Dashboard` as any);
     }
   };
 
   const handleBack = () => {
-    router.back(); // This will navigate back to the UserSelectionScreen
+    router.back();
   };
 
   return (
@@ -34,35 +37,37 @@ const SignIn = () => {
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
       </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleMain}>Sign In</ThemedText>
+        <ThemedText style={styles.titleMain}>{t('signIn')}</ThemedText>
         <ThemedText style={styles.titleSub}>
-          as <ThemedText style={styles.userType}>{userType}</ThemedText>
+          {t('as')} <ThemedText style={styles.userType}>{t(userType.toLowerCase())}</ThemedText>
         </ThemedText>
       </View>
       <View style={styles.form}>
         <Input
-          placeholder="Email"
+          placeholder={t('email')}
           onChangeText={setEmail}
           value={email}
           keyboardType="email-address"
           autoCapitalize="none"
-          leftIcon={<Icon name="email" type="material" color="#FFFFFF" />}
+          leftIcon={isRTL ? undefined : <Icon name="email" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="email" type="material" color="#FFFFFF" /> : undefined}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.inputText}
+          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder="Password"
+          placeholder={t('password')}
           onChangeText={setPassword}
           value={password}
           secureTextEntry
-          leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
+          leftIcon={isRTL ? undefined : <Icon name="lock" type="material" color="#FFFFFF" />}
+          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : undefined}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.inputText}
+          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Button
-          title="Sign In"
+          title={t('signIn')}
           onPress={handleSignIn}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
@@ -71,7 +76,7 @@ const SignIn = () => {
       </View>
       <TouchableOpacity onPress={() => router.push({ pathname: '/SignUp', params: { userType } })}>
         <ThemedText style={styles.signUpText}>
-          Don't have an account? <ThemedText style={styles.signUpHighlight}>Sign Up</ThemedText>
+          {t('dontHaveAccount')} <ThemedText style={styles.signUpHighlight}>{t('createAccount')}</ThemedText>
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
@@ -165,6 +170,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  rtlText: {
+    textAlign: 'right',
   },
 });
 

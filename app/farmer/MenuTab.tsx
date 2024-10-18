@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { Card, Text, Icon } from 'react-native-elements';
 import { ThemedView } from '../../components/ThemedView';
+import { useTranslation } from 'react-i18next';
 
 const API_KEY = "33e96491c93c4bb88bc130136241209";  // Replace with your WeatherAPI key
 const BASE_URL = "http://api.weatherapi.com/v1/current.json";
 
 const MenuTab = () => {
+  const { t } = useTranslation();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,30 +28,98 @@ const MenuTab = () => {
     }
   };
 
+  const getWeatherIcon = (condition) => {
+    // Map weather conditions to appropriate icons
+    const iconMap = {
+      'Sunny': 'sun',
+      'Clear': 'moon',
+      'Partly cloudy': 'cloud',
+      'Cloudy': 'cloudy',
+      'Overcast': 'cloud',
+      'Mist': 'water',
+      'Patchy rain possible': 'cloud-rain',
+      'Patchy snow possible': 'cloud-snow',
+      'Patchy sleet possible': 'cloud-sleet',
+      'Patchy freezing drizzle possible': 'cloud-drizzle',
+      'Thundery outbreaks possible': 'cloud-lightning',
+      'Blowing snow': 'wind',
+      'Blizzard': 'wind',
+      'Fog': 'water',
+      'Freezing fog': 'water',
+      'Patchy light drizzle': 'cloud-drizzle',
+      'Light drizzle': 'cloud-drizzle',
+      'Freezing drizzle': 'cloud-drizzle',
+      'Heavy freezing drizzle': 'cloud-drizzle',
+      'Patchy light rain': 'cloud-rain',
+      'Light rain': 'cloud-rain',
+      'Moderate rain at times': 'cloud-rain',
+      'Moderate rain': 'cloud-rain',
+      'Heavy rain at times': 'cloud-rain',
+      'Heavy rain': 'cloud-rain',
+      'Light freezing rain': 'cloud-rain',
+      'Moderate or heavy freezing rain': 'cloud-rain',
+      'Light sleet': 'cloud-sleet',
+      'Moderate or heavy sleet': 'cloud-sleet',
+      'Patchy light snow': 'cloud-snow',
+      'Light snow': 'cloud-snow',
+      'Patchy moderate snow': 'cloud-snow',
+      'Moderate snow': 'cloud-snow',
+      'Patchy heavy snow': 'cloud-snow',
+      'Heavy snow': 'cloud-snow',
+      'Ice pellets': 'cloud-snow',
+      'Light rain shower': 'cloud-rain',
+      'Moderate or heavy rain shower': 'cloud-rain',
+      'Torrential rain shower': 'cloud-rain',
+      'Light sleet showers': 'cloud-sleet',
+      'Moderate or heavy sleet showers': 'cloud-sleet',
+      'Light snow showers': 'cloud-snow',
+      'Moderate or heavy snow showers': 'cloud-snow',
+      'Light showers of ice pellets': 'cloud-snow',
+      'Moderate or heavy showers of ice pellets': 'cloud-snow',
+      'Patchy light rain with thunder': 'cloud-lightning-rain',
+      'Moderate or heavy rain with thunder': 'cloud-lightning-rain',
+      'Patchy light snow with thunder': 'cloud-lightning-snow',
+      'Moderate or heavy snow with thunder': 'cloud-lightning-snow',
+    };
+
+    return iconMap[condition] || 'help-circle'; // Default icon if condition is not found
+  };
+
   const features = [
-    { name: 'Yield Prediction', icon: 'chart-line' },
-    { name: 'Expert Consultation', icon: 'video' },
-    { name: 'Buy Coins', icon: 'coins' },
-    { name: 'Auction System', icon: 'gavel' },
-    { name: 'Field Details', icon: 'seedling' },
+    { name: t('yieldPrediction'), icon: 'chart-line' },
+    { name: t('expertConsultation'), icon: 'video' },
+    { name: t('buyCoins'), icon: 'coins' },
+    { name: t('auctionSystem'), icon: 'gavel' },
+    { name: t('fieldDetails'), icon: 'seedling' },
   ];
 
   return (
     <ThemedView style={styles.container}>
       <ScrollView>
         <Card containerStyle={styles.weatherCard}>
-          <Text style={styles.weatherTitle}>Current Weather</Text>
+          <Text style={styles.weatherTitle}>{t('currentWeather')}</Text>
           {loading ? (
             <ActivityIndicator size="large" color="#FFFFFF" />
           ) : weatherData ? (
-            <View>
-              <Text style={styles.weatherText}>Location: {weatherData.location.name}</Text>
-              <Text style={styles.weatherText}>Temperature: {weatherData.current.temp_c}°C</Text>
-              <Text style={styles.weatherText}>Condition: {weatherData.current.condition.text}</Text>
-              <Text style={styles.weatherText}>Humidity: {weatherData.current.humidity}%</Text>
+            <View style={styles.weatherContent}>
+              <Icon
+                name={getWeatherIcon(weatherData.current.condition.text)}
+                type="feather"
+                color="#FFFFFF"
+                size={50}
+              />
+              <View style={styles.weatherInfo}>
+                <Text style={styles.weatherText}>{t('location')}: {weatherData.location.name}</Text>
+                <Text style={styles.weatherText}>
+                  {t('temperature')}: {weatherData.current.temp_c}
+                  <Text style={styles.degreeSymbol}>°C</Text>
+                </Text>
+                <Text style={styles.weatherText}>{t('condition')}: {weatherData.current.condition.text}</Text>
+                <Text style={styles.weatherText}>{t('humidity')}: {weatherData.current.humidity}%</Text>
+              </View>
             </View>
           ) : (
-            <Text style={styles.weatherText}>Failed to load weather data</Text>
+            <Text style={styles.weatherText}>{t('failedToLoadWeather')}</Text>
           )}
         </Card>
         {features.map((feature, index) => (
@@ -79,10 +149,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  weatherContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  weatherInfo: {
+    marginLeft: 20,
+  },
   weatherText: {
     color: '#FFFFFF',
     fontSize: 16,
     marginBottom: 5,
+  },
+  degreeSymbol: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    lineHeight: 20,
+    textAlignVertical: 'top',
   },
   featureCard: {
     borderRadius: 10,

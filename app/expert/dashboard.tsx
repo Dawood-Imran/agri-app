@@ -1,21 +1,24 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
 import MessagesTab from './MessagesTab';
 import AccountTab from './AccountTab';
 
 const Tab = createBottomTabNavigator();
 
 const ExpertDashboard = () => {
+  const { t } = useTranslation();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Messages') {
+          if (route.name === t('messages')) {
             iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
-          } else if (route.name === 'Account') {
+          } else if (route.name === t('account')) {
             iconName = focused ? 'person' : 'person-outline';
           }
 
@@ -36,8 +39,8 @@ const ExpertDashboard = () => {
         },
       })}
     >
-      <Tab.Screen name="Messages" component={MessagesTab} />
-      <Tab.Screen name="Account" component={AccountTab} />
+      <Tab.Screen name={t('messages')} component={MessagesTab} />
+      <Tab.Screen name={t('account')} component={AccountTab} />
     </Tab.Navigator>
   );
 };
