@@ -90,7 +90,6 @@ const MenuTab = () => {
   const features = [
     { name: t('yieldPrediction'), icon: 'chart-line', route: '/farmer/YieldPrediction' },
     { name: t('expertConsultation'), icon: 'video', route: '/farmer/ExpertConsultation' },
-    { name: t('buyCoins'), icon: 'coins', route: '/farmer/BuyCoins' },
     { name: t('auctionSystem'), icon: 'gavel', route: '/farmer/AuctionSystem' },
     { name: t('fieldDetails'), icon: 'seedling', route: '/farmer/FieldDetails' },
   ];

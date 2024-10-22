@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 import MessagesTab from './MessagesTab';
 import AccountTab from './AccountTab';
+import CoinScreen from './CoinScreen';
+import CoinDisplay from '../../components/CoinDisplay';
 
 const Tab = createBottomTabNavigator();
 
 const ExpertDashboard = () => {
   const { t } = useTranslation();
+  const [coins, setCoins] = useState(500); // Example initial value
+  const navigation = useNavigation();
 
   return (
     <Tab.Navigator
@@ -37,10 +43,20 @@ const ExpertDashboard = () => {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
+        headerRight: () => (
+          <TouchableOpacity onPress={() => navigation.navigate('Coins' as never)}>
+            <CoinDisplay coins={coins} />
+          </TouchableOpacity>
+        ),
       })}
     >
       <Tab.Screen name={t('messages')} component={MessagesTab} />
       <Tab.Screen name={t('account')} component={AccountTab} />
+      <Tab.Screen 
+        name="Coins" 
+        component={CoinScreen} 
+        options={{ tabBarButton: () => null }}
+      />
     </Tab.Navigator>
   );
 };
