@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
 const CoinScreen = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const [balance, setBalance] = React.useState(100); // Example balance
   const [transactions, setTransactions] = React.useState([
@@ -35,22 +35,34 @@ const CoinScreen = () => {
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.balanceCard}>
-          <ThemedText style={styles.balanceTitle}>{t('Current Balance')}</ThemedText>
-          <ThemedText style={styles.balance}>{balance} {t('agroCoins')}</ThemedText>
+          <ThemedText style={styles.balanceTitle}>
+            {i18n.language === 'ur' ? 'موجودہ بیلنس' : t('Current Balance')}
+          </ThemedText>
+          <ThemedText style={styles.balance}>
+            {balance} {i18n.language === 'ur' ? 'ایگرو کوائنز' : t('agroCoins')}
+          </ThemedText>
         </View>
         <Button
-          title={t('buyCoins')}
+          title={i18n.language === 'ur' ? 'کوائنز خریدیں' : t('buyCoins')}
           onPress={() => {/* Implement coin purchase */}}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           containerStyle={styles.buttonContainer}
         />
         <View style={styles.card}>
-          <ThemedText style={styles.sectionTitle}>{t('Transaction History')}</ThemedText>
+          <ThemedText style={styles.sectionTitle}>
+            {i18n.language === 'ur' ? 'لین دین کی تاریخ' : t('Transaction History')}
+          </ThemedText>
           {transactions.map((item, i) => (
             <ListItem key={i} bottomDivider>
               <ListItem.Content>
-                <ListItem.Title>{item.service}</ListItem.Title>
+                <ListItem.Title>
+                  {i18n.language === 'ur' ? 
+                    (item.service === 'Yield Prediction' ? 'پیداوار کی پیش گوئی' :
+                     item.service === 'Expert Consultation' ? 'ماہر مشاورت' :
+                     'فصل کی فروخت (نیلامی)') : 
+                    item.service}
+                </ListItem.Title>
                 <ListItem.Subtitle>{item.date}</ListItem.Subtitle>
               </ListItem.Content>
               <ThemedText style={item.type === 'Spent' ? styles.spent : styles.earned}>

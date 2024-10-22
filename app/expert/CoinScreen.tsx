@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
 const CoinScreen = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
-  const [balance, setBalance] = React.useState(500); // Example balance
+  const [balance, setBalance] = React.useState(500);
   const [consultations, setConsultations] = React.useState([
     { id: 1, farmer: 'John Doe', duration: '30 min', coins: 50, date: '2023-05-01' },
     { id: 2, farmer: 'Jane Smith', duration: '45 min', coins: 75, date: '2023-04-28' },
@@ -34,13 +34,18 @@ const CoinScreen = () => {
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.balanceCard}>
-          <ThemedText style={styles.balanceTitle}>{t('Earned Coins Balance')}</ThemedText>
-          <ThemedText style={styles.balance}>{balance} {t('agroCoins')}</ThemedText>
+          <ThemedText style={styles.balanceTitle}>
+            {i18n.language === 'ur' ? 'کمائے گئے کوائنز کا بیلنس' : t('Earned Coins Balance')}
+          </ThemedText>
+          <ThemedText style={styles.balance}>
+            {balance} {i18n.language === 'ur' ? 'ایگرو کوائنز' : t('agroCoins')}
+          </ThemedText>
         </View>
         
-        
         <View style={styles.card}>
-          <ThemedText style={styles.sectionTitle}>{t('Consultation History')}</ThemedText>
+          <ThemedText style={styles.sectionTitle}>
+            {i18n.language === 'ur' ? 'مشاورت کی تاریخ' : t('Consultation History')}
+          </ThemedText>
           {consultations.map((item, i) => (
             <ListItem key={i} bottomDivider>
               <ListItem.Content>
