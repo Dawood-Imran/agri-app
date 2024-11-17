@@ -213,6 +213,10 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 10,
   },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default SignIn;

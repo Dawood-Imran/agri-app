@@ -5,7 +5,7 @@ import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
-import { MaterialCommunityIcons } from 'react-native-vector-icons'; // Import the icon library
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Correct import for MaterialCommunityIcons
 
 const { width } = Dimensions.get('window'); // Get screen width
 
@@ -75,7 +75,7 @@ const SignUp = () => {
           value={name}
           leftIcon={<Icon name="person" type="material" color="#FFFFFF" />}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
+          inputStyle={[styles.inputText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
@@ -89,7 +89,7 @@ const SignUp = () => {
             </View>
           }
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
+          inputStyle={[styles.inputText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
@@ -104,7 +104,7 @@ const SignUp = () => {
           secureTextEntry 
           leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
+          inputStyle={[styles.inputText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
@@ -119,7 +119,7 @@ const SignUp = () => {
           secureTextEntry 
           leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
+          inputStyle={[styles.inputText]}
           placeholderTextColor="#E0E0E0"
         />
         {errorMessage ? <ThemedText style={styles.errorText}>{errorMessage}</ThemedText> : null}
@@ -235,6 +235,10 @@ const styles = StyleSheet.create({
     width: 30,
     height: 20,
     marginRight: 10,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
