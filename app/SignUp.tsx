@@ -1,41 +1,46 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Image } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
+import { MaterialCommunityIcons } from 'react-native-vector-icons'; // Import the icon library
+
+const { width } = Dimensions.get('window'); // Get screen width
 
 const SignUp = () => {
   const { userType } = useLocalSearchParams<{ userType: string }>();
   const router = useRouter();
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [pinCode, setPinCode] = useState('');
+  const [confirmPinCode, setConfirmPinCode] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { t, i18n } = useTranslation();
 
   const isRTL = i18n.language === 'ur';
 
   const validateForm = () => {
+    setErrorMessage(''); // Reset error message
     if (!name.trim()) {
-      Alert.alert(t('error'), t('nameRequired'));
+      setErrorMessage(t('Name Required'));
       return false;
     }
     if (!phoneNumber.trim()) {
-      Alert.alert(t('error'), t('phoneNumberRequired'));
+      setErrorMessage(t('Phone Number Required'));
       return false;
     }
-    if (!/^\d{10,}$/.test(phoneNumber.trim())) {
-      Alert.alert(t('error'), t('invalidPhoneNumber'));
+    if (!/^(?:\d{10}|\d{11})$/.test(phoneNumber.trim())) {
+      setErrorMessage(t('Invalid Phone Number'));
       return false;
     }
-    if (!password.trim()) {
-      Alert.alert(t('error'), t('passwordRequired'));
+    if (pinCode.length !== 4 || !/^\d+$/.test(pinCode.trim())) {
+      setErrorMessage(t('Pin Code Must Be 4 Digits'));
       return false;
     }
-    if (password !== confirmPassword) {
-      Alert.alert(t('error'), t('passwordsMustMatch'));
+    if (pinCode !== confirmPinCode) {
+      setErrorMessage(t('Pins Must Match'));
       return false;
     }
     return true;
@@ -43,9 +48,7 @@ const SignUp = () => {
 
   const handleSignUp = () => {
     if (validateForm()) {
-      // Here you would typically handle user registration
-      // For now, we'll just show an alert and navigate to the SignIn screen
-      alert(t('accountCreatedSuccessfully'));
+      alert(t('Account Created Successfully'));
       router.replace({ pathname: '/SignIn', params: { userType } });
     }
   };
@@ -60,57 +63,68 @@ const SignUp = () => {
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
       </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleMain}>{t('createAccount')}</ThemedText>
+        <ThemedText style={styles.titleMain}>{t('Create Account')}</ThemedText>
         <ThemedText style={styles.titleSub}>
           {t('as')} <ThemedText style={styles.userType}>{t(userType.toLowerCase())}</ThemedText>
         </ThemedText>
       </View>
       <View style={styles.form}>
         <Input
-          placeholder={t('name')}
+          placeholder={t('Name')}
           onChangeText={setName}
           value={name}
-          leftIcon={isRTL ? undefined : <Icon name="person" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="person" type="material" color="#FFFFFF" /> : undefined}
+          leftIcon={<Icon name="person" type="material" color="#FFFFFF" />}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder={t('phoneNumber')}
+          placeholder={t("Phone Number")}
           onChangeText={setPhoneNumber}
           value={phoneNumber}
           keyboardType="phone-pad"
-          leftIcon={isRTL ? undefined : <Icon name="phone" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="phone" type="material" color="#FFFFFF" /> : undefined}
+          leftIcon={
+            <View style={styles.iconContainer}>
+              <Image source={require('../assets/pakistan-flag.jpg')} style={styles.flagIcon} />
+            </View>
+          }
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder={t('password')}
-          onChangeText={setPassword}
-          value={password}
-          secureTextEntry
-          leftIcon={isRTL ? undefined : <Icon name="lock" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : undefined}
+          placeholder={t("Enter Pin Code")}
+          onChangeText={(text) => {
+            if (text.length <= 4) {
+              setPinCode(text);
+            }
+          }}
+          value={pinCode}
+          keyboardType="numeric"
+          secureTextEntry 
+          leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder={t('confirmPassword')}
-          onChangeText={setConfirmPassword}
-          value={confirmPassword}
-          secureTextEntry
-          leftIcon={isRTL ? undefined : <Icon name="lock" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : undefined}
+          placeholder={t("Confirm Pin Code")}
+          onChangeText={(text) => {
+            if (text.length <= 4) {
+              setConfirmPinCode(text);
+            }
+          }}
+          value={confirmPinCode}
+          keyboardType="numeric"
+          secureTextEntry 
+          leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
           inputContainerStyle={styles.inputContainer}
           inputStyle={[styles.inputText, isRTL && styles.rtlText]}
           placeholderTextColor="#E0E0E0"
         />
+        {errorMessage ? <ThemedText style={styles.errorText}>{errorMessage}</ThemedText> : null}
         <Button
-          title={t('createAccount')}
+          title={t('Create Account')}
           onPress={handleSignUp}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
@@ -119,7 +133,7 @@ const SignUp = () => {
       </View>
       <TouchableOpacity onPress={() => router.push({ pathname: '/SignIn', params: { userType } })}>
         <ThemedText style={styles.signInText}>
-          {t('alreadyHaveAccount')} <ThemedText style={styles.signInHighlight}>{t('signIn')}</ThemedText>
+          {t('Already Have Account')} <ThemedText style={styles.signInHighlight}>{t('Sign In')}</ThemedText>
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
@@ -138,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingTop: 30, // Increased padding to avoid text cutting
+    paddingTop: 30,
   },
   titleMain: {
     fontSize: 36,
@@ -165,7 +179,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputContainer: {
-    borderBottomWidth: 0,
+    borderBottomWidth: 0, // Remove underline
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 25,
     paddingHorizontal: 15,
@@ -173,6 +187,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: '#FFFFFF',
+    paddingLeft: 20, // Add padding to create space for the icon
   },
   buttonContainer: {
     marginTop: 20,
@@ -182,7 +197,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC107',
     paddingVertical: 15,
     borderRadius: 25,
-    // Removed shadow properties
   },
   buttonTitle: {
     color: '#1B5E20',
@@ -191,7 +205,7 @@ const styles = StyleSheet.create({
   },
   signInText: {
     color: '#FFFFFF',
-    marginTop: 20, // Add margin for spacing
+    marginTop: 20,
   },
   signInHighlight: {
     color: '#FFC107',
@@ -213,8 +227,14 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  rtlText: {
-    textAlign: 'right',
+  errorText: {
+    color: 'red',
+    marginTop: 5,
+  },
+  flagIcon: {
+    width: 30,
+    height: 20,
+    marginRight: 10,
   },
 });
 

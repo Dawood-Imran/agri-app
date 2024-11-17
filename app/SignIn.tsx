@@ -1,31 +1,35 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Image } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 
+const { width } = Dimensions.get('window'); // Get screen width
+
 const SignIn = () => {
   const { userType } = useLocalSearchParams<{ userType: string }>();
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [pinCode, setPinCode] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { t, i18n } = useTranslation();
 
   const isRTL = i18n.language === 'ur';
 
   const validateForm = () => {
+    setErrorMessage(''); // Reset error message
     if (!phoneNumber.trim()) {
-      Alert.alert(t('error'), t('phoneNumberRequired'));
+      setErrorMessage(t('Phone Number Required'));
       return false;
     }
-    if (!/^\d{10,}$/.test(phoneNumber.trim())) {
-      Alert.alert(t('error'), t('invalidPhoneNumber'));
+    if (!/^(?:\d{10}|\d{11})$/.test(phoneNumber.trim())) {
+      setErrorMessage(t('Invalid Phone Number'));
       return false;
     }
-    if (!password.trim()) {
-      Alert.alert(t('error'), t('passwordRequired'));
+    if (pinCode.length !== 4 || !/^\d+$/.test(pinCode)) {
+      setErrorMessage(t('Pin Code Must Be 4 Digits'));
       return false;
     }
     return true;
@@ -34,16 +38,7 @@ const SignIn = () => {
   const handleSignIn = () => {
     if (validateForm()) {
       // Here you would typically handle authentication
-      // For now, we'll just navigate to the appropriate dashboard
-      if (userType.toLowerCase() === 'farmer') {
-        router.replace('/farmer/dashboard');
-      } else if (userType.toLowerCase() === 'expert') {
-        router.replace('/expert/dashboard');
-      } else if (userType.toLowerCase() === 'buyer') {
-        router.replace('/buyer/dashboard');
-      } else {
-        router.replace(`/${userType.toLowerCase()}Dashboard` as any);
-      }
+      router.replace(`/${userType.toLowerCase()}Dashboard` as any);
     }
   };
 
@@ -57,36 +52,52 @@ const SignIn = () => {
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
       </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleMain}>{t('signIn')}</ThemedText>
+        <ThemedText style={styles.titleMain}>{t('Sign In')}</ThemedText>
         <ThemedText style={styles.titleSub}>
           {t('as')} <ThemedText style={styles.userType}>{t(userType.toLowerCase())}</ThemedText>
         </ThemedText>
       </View>
       <View style={styles.form}>
-        <Input
-          placeholder={t('phoneNumber')}
-          onChangeText={setPhoneNumber}
-          value={phoneNumber}
-          keyboardType="phone-pad"
-          leftIcon={isRTL ? undefined : <Icon name="phone" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="phone" type="material" color="#FFFFFF" /> : undefined}
-          inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
-          placeholderTextColor="#E0E0E0"
-        />
-        <Input
-          placeholder={t('password')}
-          onChangeText={setPassword}
-          value={password}
-          secureTextEntry
-          leftIcon={isRTL ? undefined : <Icon name="lock" type="material" color="#FFFFFF" />}
-          rightIcon={isRTL ? <Icon name="lock" type="material" color="#FFFFFF" /> : undefined}
-          inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText, isRTL && styles.rtlText]}
-          placeholderTextColor="#E0E0E0"
-        />
+        <View style={styles.inputContainer}>
+          <Input
+            placeholder={t("Phone Number")} // Ensure this is translated
+            onChangeText={setPhoneNumber}
+            value={phoneNumber}
+            keyboardType="phone-pad"
+            leftIcon={
+              <View style={styles.iconContainer}>
+                <Image source={require('../assets/pakistan-flag.jpg')} style={styles.flagIcon} />
+              </View>
+            }
+            inputStyle={styles.inputText}
+            placeholderTextColor="#E0E0E0"
+            containerStyle={styles.inputField}
+            underlineColorAndroid="transparent"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Input
+            placeholder={t("Enter Pin Code")} // Ensure this is translated
+            onChangeText={setPinCode}
+            value={pinCode}
+            keyboardType="numeric"
+            secureTextEntry
+            leftIcon={
+              <View style={styles.iconContainer}>
+                <Icon name="lock" type="material" color="#FFFFFF" />
+              </View>
+            }
+            inputStyle={styles.inputText}
+            placeholderTextColor="#E0E0E0"
+            containerStyle={styles.inputField}
+            underlineColorAndroid="transparent"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+          />
+        </View>
+        {errorMessage ? <ThemedText style={styles.errorText}>{errorMessage}</ThemedText> : null}
         <Button
-          title={t('signIn')}
+          title={t('Sign In')} // Ensure this is translated
           onPress={handleSignIn}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
@@ -95,7 +106,7 @@ const SignIn = () => {
       </View>
       <TouchableOpacity onPress={() => router.push({ pathname: '/SignUp', params: { userType } })}>
         <ThemedText style={styles.signUpText}>
-          {t('dontHaveAccount')} <ThemedText style={styles.signUpHighlight}>{t('createAccount')}</ThemedText>
+          {t("Don't Have Account")} <ThemedText style={styles.signUpHighlight}>{t('Create Account')}</ThemedText>
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
@@ -114,7 +125,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingTop: 30, // Increase padding at the top to avoid cutting off text
+    paddingTop: 30,
   },
   titleMain: {
     fontSize: 36,
@@ -141,14 +152,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputContainer: {
-    borderBottomWidth: 0,
+    position: 'relative',
+    marginBottom: 20,
+  },
+  inputText: {
+    color: '#FFFFFF',
+    paddingLeft: 20, // Add padding to create space for the icon
+  },
+  inputField: {
+    borderBottomWidth: 0, // Remove underline
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 25,
     paddingHorizontal: 15,
     marginBottom: 10,
-  },
-  inputText: {
-    color: '#FFFFFF',
   },
   buttonContainer: {
     marginTop: 20,
@@ -158,7 +174,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC107',
     paddingVertical: 15,
     borderRadius: 25,
-    // Removed shadow properties
   },
   buttonTitle: {
     color: '#1B5E20',
@@ -167,11 +182,10 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     color: '#FFFFFF',
-    marginTop: 20, // Add margin to give space between form and Sign Up text
+    marginTop: 20,
   },
   signUpHighlight: {
     color: '#FFC107',
-    // Removed textDecorationLine: 'underline',
   },
   backButton: {
     position: 'absolute',
@@ -190,8 +204,14 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  rtlText: {
-    textAlign: 'right',
+  errorText: {
+    color: 'red',
+    marginTop: 5,
+  },
+  flagIcon: {
+    width: 30,
+    height: 20,
+    marginRight: 10,
   },
 });
 
