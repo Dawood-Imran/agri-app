@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Image, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
@@ -18,6 +18,27 @@ const SignIn = () => {
 
   const isRTL = i18n.language === 'ur';
 
+  const handleSignIn = () => {
+    if (!phoneNumber.trim() || !pinCode.trim()) {
+      Alert.alert(t('error'), t('allFieldsRequired'));
+      return;
+    }
+
+    // Here you would typically handle authentication
+    // For now, we'll just navigate to the appropriate dashboard
+    if (userType.toLowerCase() === 'farmer') {
+      router.replace('/farmer/dashboard');
+    } else if (userType.toLowerCase() === 'expert') {
+      router.replace('/expert/dashboard');
+    } else if (userType.toLowerCase() === 'buyer') {
+      router.replace('/buyer/dashboard');
+    } else {
+      router.replace(`/${userType.toLowerCase()}Dashboard` as any);
+    }
+  };
+
+
+
   const validateForm = () => {
     setErrorMessage(''); // Reset error message
     if (!phoneNumber.trim()) {
@@ -35,12 +56,7 @@ const SignIn = () => {
     return true;
   };
 
-  const handleSignIn = () => {
-    if (validateForm()) {
-      // Here you would typically handle authentication
-      router.replace(`/${userType.toLowerCase()}Dashboard` as any);
-    }
-  };
+  
 
   const handleBack = () => {
     router.back();
