@@ -77,7 +77,6 @@ const MenuTab = () => {
     { 
       name: t('expertConsultation'), 
       icon: require('../../assets/images/farmer-icons/telemarketing.png'), 
-      
       route: '/farmer/ExpertConsultation' 
     },
     { 
@@ -94,7 +93,7 @@ const MenuTab = () => {
       name: t('agricultureSchemes'), 
       icon: require('../../assets/images/farmer-icons/manager.png'), 
       route: '/farmer/SchemesList' 
-    },
+    }
   ];
 
   return (
@@ -309,6 +308,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
+  },
+  coinContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    padding: 8,
+    borderRadius: 20,
+  },
+  coinIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
+  coinText: {
+    color: '#FFC107',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
