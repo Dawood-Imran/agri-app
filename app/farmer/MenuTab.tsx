@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, ActivityIndicator, TouchableOpacity, ImageBackground } from 'react-native';
+import { ScrollView, StyleSheet, View, ActivityIndicator, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { Card, Text, Icon } from 'react-native-elements';
 import { ThemedView } from '../../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
+import ThemedText from '@/components/ThemedText';
 
 const API_KEY = "33e96491c93c4bb88bc130136241209";  // Replace with your WeatherAPI key
 const BASE_URL = "http://api.weatherapi.com/v1/current.json";
@@ -18,6 +19,7 @@ interface WeatherData {
       text: string;
     };
     humidity: number;
+    wind_kph: number;
   };
 }
 
@@ -33,7 +35,7 @@ const MenuTab = () => {
 
   const fetchWeather = async () => {
     try {
-      const response = await fetch(`${BASE_URL}?key=${API_KEY}&q=Lahore&aqi=no`);
+      const response = await fetch(`${BASE_URL}?key=${API_KEY}&q=Faisalabad&aqi=no`);
       const data = await response.json();
       setWeatherData(data);
       setLoading(false);
@@ -67,56 +69,129 @@ const MenuTab = () => {
   };
 
   const features = [
-    { name: t('yieldPrediction'), icon: 'chart-line', route: '/farmer/YieldPrediction' },
-    { name: t('expertConsultation'), icon: 'video', route: '/farmer/ExpertConsultation' },
-    { name: t('auctionSystem'), icon: 'gavel', route: '/farmer/AuctionSystem' },
-    { name: t('fieldDetails'), icon: 'seedling', route: '/farmer/FieldDetails' },
-    { name: t('agricultureSchemes'), icon: 'file-alt', route: '/farmer/SchemesList' },
+    { 
+      name: t('yieldPrediction'), 
+      icon: require('../../assets/images/farmer-icons/yield.png'), 
+      route: '/farmer/YieldPrediction' 
+    },
+    { 
+      name: t('expertConsultation'), 
+      icon: require('../../assets/images/farmer-icons/telemarketing.png'), 
+      
+      route: '/farmer/ExpertConsultation' 
+    },
+    { 
+      name: t('auctionSystem'), 
+      icon: require('../../assets/images/farmer-icons/auction.png'), 
+      route: '/farmer/AuctionSystem' 
+    },
+    { 
+      name: t('fieldDetails'), 
+      icon: require('../../assets/images/farmer-icons/wheat.png'), 
+      route: '/farmer/FieldDetails' 
+    },
+    { 
+      name: t('agricultureSchemes'), 
+      icon: require('../../assets/images/farmer-icons/manager.png'), 
+      route: '/farmer/SchemesList' 
+    },
   ];
 
   return (
     <ImageBackground
       source={require('../../assets/images/pexels-tamhasipkhan-11817009.jpg')}
-      
       style={styles.backgroundImage}
       resizeMode="cover"
     >
       <View style={styles.overlay}>
-        <ScrollView>
-          <Card containerStyle={styles.weatherCard}>
-            <Text style={styles.weatherTitle}>{t('currentWeather')}</Text>
-            {loading ? (
-              <ActivityIndicator size="large" color="#FFFFFF" />
-            ) : weatherData ? (
-              <View style={styles.weatherContent}>
-                <Icon
-                  name={getWeatherIcon(weatherData.current.condition.text)}
-                  type="feather"
-                  color="#FFFFFF"
-                  size={50}
+        <View style={styles.header}>
+          <View>
+            <ThemedText style={styles.greeting}>Hello, Dawood</ThemedText>
+            <ThemedText style={styles.subGreeting}>
+              {weatherData ? `It's a ${weatherData.current.condition.text} day!` : 'Loading...'}
+            </ThemedText>
+          </View>
+          <View style={styles.locationContainer}>
+            <Image 
+              source={require('../../assets/images/farmer-icons/weather-icons/map.png')}
+              style={styles.locationIcon}
+            />
+            <ThemedText style={styles.locationText}>
+              {weatherData?.location.name || 'Loading...'}
+            </ThemedText>
+          </View>
+        </View>
+
+        <ScrollView 
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.weatherContainer}>
+            <View style={styles.weatherRow}>
+              <View style={styles.weatherItem}>
+                <Image 
+                  source={require('../../assets/images/farmer-icons/weather-icons/hot.png')}
+                  style={styles.weatherIcon}
                 />
-                <View style={styles.weatherInfo}>
-                  <Text style={styles.weatherText}>{t('location')}: {weatherData.location.name}</Text>
-                  <Text style={styles.weatherText}>
-                    {t('temperature')}: {weatherData.current.temp_c}
-                    <Text style={styles.degreeSymbol}>°C</Text>
-                  </Text>
-                  <Text style={styles.weatherText}>{t('condition')}: {weatherData.current.condition.text}</Text>
-                  <Text style={styles.weatherText}>{t('humidity')}: {weatherData.current.humidity}%</Text>
-                </View>
+                <ThemedText style={styles.weatherValue}>
+                  {weatherData ? `${weatherData.current.temp_c}°C` : '--'}
+                </ThemedText>
+                <ThemedText style={styles.weatherLabel}>{t('temperature')}</ThemedText>
               </View>
-            ) : (
-              <Text style={styles.weatherText}>{t('failedToLoadWeather')}</Text>
-            )}
-          </Card>
-          {features.map((feature, index) => (
-            <TouchableOpacity key={index} onPress={() => router.push(feature.route as never)}>
-              <Card containerStyle={styles.featureCard}>
-                <Icon name={feature.icon} type="font-awesome-5" size={30} color="#FFC107" />
-                <Text style={styles.featureText}>{feature.name}</Text>
-              </Card>
-            </TouchableOpacity>
-          ))}
+
+              <View style={styles.weatherItem}>
+                <Image 
+                  source={require('../../assets/images/farmer-icons/weather-icons/humidity.png')}
+                  style={styles.weatherIcon}
+                />
+                <ThemedText style={styles.weatherValue}>
+                  {weatherData ? `${weatherData.current.humidity}%` : '--'}
+                </ThemedText>
+                <ThemedText style={styles.weatherLabel}>{t('humidity')}</ThemedText>
+              </View>
+            </View>
+
+            <View style={styles.weatherRow}>
+              <View style={styles.weatherItem}>
+                <Image 
+                  source={require('../../assets/images/farmer-icons/weather-icons/atmospheric-conditions.png')}
+                  style={styles.weatherIcon}
+                />
+                <ThemedText style={[styles.weatherValue, { fontSize: 16 }]}>
+                  {weatherData ? weatherData.current.condition.text : '--'}
+                </ThemedText>
+                <ThemedText style={styles.weatherLabel}>{t('condition')}</ThemedText>
+              </View>
+
+              <View style={styles.weatherItem}>
+                <Image 
+                  source={require('../../assets/images/farmer-icons/weather-icons/wind.png')}
+                  style={styles.weatherIcon}
+                />
+                <ThemedText style={styles.weatherValue}>
+                  {weatherData ? `${weatherData.current.wind_kph} km/h` : '--'}
+                </ThemedText>
+                <ThemedText style={styles.weatherLabel}>{t('windspeed')}</ThemedText>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.menuContainer}>
+            {features.map((feature, index) => (
+              <TouchableOpacity key={index} onPress={() => router.push(feature.route as never)}>
+                <View style={styles.featureCard}>
+                  <View style={styles.featureContent}>
+                    <Image 
+                      source={feature.icon}
+                      style={styles.featureIcon}
+                      resizeMode="contain"
+                    />
+                    <Text style={styles.featureText}>{feature.name}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
         </ScrollView>
       </View>
     </ImageBackground>
@@ -126,69 +201,114 @@ const MenuTab = () => {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    width: '100%',
-    height: '100%',
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay for better readability
-    padding: 15,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
-  weatherCard: {
-    backgroundColor: 'rgba(97, 177, 90, 0.9)', // Slightly transparent green
-    borderRadius: 10,
-    marginBottom: 20,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
-  weatherTitle: {
-    color: '#FFFFFF',
-    fontSize: 20,
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingBottom: 20,
+  },
+  greeting: {
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    color: '#FFFFFF',
   },
-  weatherContent: {
+  subGreeting: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    opacity: 0.8,
+  },
+  locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    padding: 10,
+    borderRadius: 20,
   },
-  weatherInfo: {
-    marginLeft: 20,
+  locationIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+    
   },
-  weatherText: {
+  locationText: {
     color: '#FFFFFF',
     fontSize: 16,
+  },
+  weatherContainer: {
+    padding: 20,
+  },
+  weatherRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  weatherItem: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: 15,
+    padding: 15,
+    alignItems: 'center',
+    width: '48%',
+  },
+  weatherIcon: {
+    width: 30,
+    height: 30,
     marginBottom: 5,
   },
-  degreeSymbol: {
+  weatherValue: {
     color: '#FFFFFF',
-    fontSize: 12,
-    lineHeight: 20,
-    textAlignVertical: 'top',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 5,
+    textAlign: 'center',
+  },
+  weatherLabel: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    opacity: 0.8,
+  },
+  menuContainer: {
+    paddingHorizontal: 15,
   },
   featureCard: {
     borderRadius: 10,
-    alignItems: 'center',
     padding: 20,
     marginBottom: 10,
-    //backgroundColor: 'rgba(255, 255, 255, 0.95)', // Slightly transparent white
     backgroundColor: 'rgba(97, 177, 90, 0.9)',
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  featureContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  featureIcon: {
+    width: 40,
+    height: 40,
+    marginBottom: 10,
   },
   featureText: {
     marginTop: 10,
     fontSize: 16,
-    //color: '#333',
     fontWeight: 'bold',
     color: '#FFFFFF',
-    
+    textAlign: 'center',
   },
 });
 
