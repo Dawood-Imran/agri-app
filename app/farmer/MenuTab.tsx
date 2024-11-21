@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, View, ActivityIndicator, TouchableOpacity, ImageBackground } from 'react-native';
 import { Card, Text, Icon } from 'react-native-elements';
 import { ThemedView } from '../../components/ThemedView';
 import { useTranslation } from 'react-i18next';
@@ -71,59 +71,78 @@ const MenuTab = () => {
     { name: t('expertConsultation'), icon: 'video', route: '/farmer/ExpertConsultation' },
     { name: t('auctionSystem'), icon: 'gavel', route: '/farmer/AuctionSystem' },
     { name: t('fieldDetails'), icon: 'seedling', route: '/farmer/FieldDetails' },
+    { name: t('agricultureSchemes'), icon: 'file-alt', route: '/farmer/SchemesList' },
   ];
 
   return (
-    <ThemedView style={styles.container}>
-      <ScrollView>
-        <Card containerStyle={styles.weatherCard}>
-          <Text style={styles.weatherTitle}>{t('currentWeather')}</Text>
-          {loading ? (
-            <ActivityIndicator size="large" color="#FFFFFF" />
-          ) : weatherData ? (
-            <View style={styles.weatherContent}>
-              <Icon
-                name={getWeatherIcon(weatherData.current.condition.text)}
-                type="feather"
-                color="#FFFFFF"
-                size={50}
-              />
-              <View style={styles.weatherInfo}>
-                <Text style={styles.weatherText}>{t('location')}: {weatherData.location.name}</Text>
-                <Text style={styles.weatherText}>
-                  {t('temperature')}: {weatherData.current.temp_c}
-                  <Text style={styles.degreeSymbol}>°C</Text>
-                </Text>
-                <Text style={styles.weatherText}>{t('condition')}: {weatherData.current.condition.text}</Text>
-                <Text style={styles.weatherText}>{t('humidity')}: {weatherData.current.humidity}%</Text>
+    <ImageBackground
+      source={require('../../assets/images/pexels-tamhasipkhan-11817009.jpg')}
+      
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <ScrollView>
+          <Card containerStyle={styles.weatherCard}>
+            <Text style={styles.weatherTitle}>{t('currentWeather')}</Text>
+            {loading ? (
+              <ActivityIndicator size="large" color="#FFFFFF" />
+            ) : weatherData ? (
+              <View style={styles.weatherContent}>
+                <Icon
+                  name={getWeatherIcon(weatherData.current.condition.text)}
+                  type="feather"
+                  color="#FFFFFF"
+                  size={50}
+                />
+                <View style={styles.weatherInfo}>
+                  <Text style={styles.weatherText}>{t('location')}: {weatherData.location.name}</Text>
+                  <Text style={styles.weatherText}>
+                    {t('temperature')}: {weatherData.current.temp_c}
+                    <Text style={styles.degreeSymbol}>°C</Text>
+                  </Text>
+                  <Text style={styles.weatherText}>{t('condition')}: {weatherData.current.condition.text}</Text>
+                  <Text style={styles.weatherText}>{t('humidity')}: {weatherData.current.humidity}%</Text>
+                </View>
               </View>
-            </View>
-          ) : (
-            <Text style={styles.weatherText}>{t('failedToLoadWeather')}</Text>
-          )}
-        </Card>
-        {features.map((feature, index) => (
-          <TouchableOpacity key={index} onPress={() => router.push(feature.route as never)}>
-            <Card containerStyle={styles.featureCard}>
-              <Icon name={feature.icon} type="font-awesome-5" size={30} color="#61B15A" />
-              <Text style={styles.featureText}>{feature.name}</Text>
-            </Card>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </ThemedView>
+            ) : (
+              <Text style={styles.weatherText}>{t('failedToLoadWeather')}</Text>
+            )}
+          </Card>
+          {features.map((feature, index) => (
+            <TouchableOpacity key={index} onPress={() => router.push(feature.route as never)}>
+              <Card containerStyle={styles.featureCard}>
+                <Icon name={feature.icon} type="font-awesome-5" size={30} color="#FFC107" />
+                <Text style={styles.featureText}>{feature.name}</Text>
+              </Card>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay for better readability
+    padding: 15,
   },
   weatherCard: {
-    backgroundColor: '#61B15A',
+    backgroundColor: 'rgba(97, 177, 90, 0.9)', // Slightly transparent green
     borderRadius: 10,
     marginBottom: 20,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   weatherTitle: {
     color: '#FFFFFF',
@@ -154,11 +173,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     marginBottom: 10,
+    //backgroundColor: 'rgba(255, 255, 255, 0.95)', // Slightly transparent white
+    backgroundColor: 'rgba(97, 177, 90, 0.9)',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
   },
   featureText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#333',
+    //color: '#333',
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    
   },
 });
 
