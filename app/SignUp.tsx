@@ -54,7 +54,7 @@ const SignUp = () => {
   };
 
   const handleBack = () => {
-    router.back();
+    router.push({ pathname: '/SignIn', params: { userType } });
   };
 
   return (
@@ -73,23 +73,37 @@ const SignUp = () => {
           placeholder={t('Name')}
           onChangeText={setName}
           value={name}
-          leftIcon={<Icon name="person" type="material" color="#FFFFFF" />}
+          leftIcon={
+            <View style={styles.iconContainer}>
+              <Icon name="person" type="material" color="#FFFFFF" />
+              <View style={styles.separator} />
+            </View>
+          }
+          containerStyle={styles.inputWrapper}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText]}
+          inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
         />
         <Input
-          placeholder={t("Phone Number")}
-          onChangeText={setPhoneNumber}
+          placeholder="3XXXXXXXXX"
+          onChangeText={(text) => {
+            // Only allow 10 digits and must start with 3
+            if (text.length <= 10 && (!text.length || text.startsWith('3'))) {
+              setPhoneNumber(text);
+            }
+          }}
           value={phoneNumber}
           keyboardType="phone-pad"
           leftIcon={
-            <View style={styles.iconContainer}>
+            <View style={[styles.iconContainer, { flexDirection: 'row', alignItems: 'center' }]}>
               <Image source={require('../assets/pakistan-flag.jpg')} style={styles.flagIcon} />
+              <ThemedText style={styles.countryCode}>+92</ThemedText>
+              <View style={styles.separator} />
             </View>
           }
+          containerStyle={styles.inputWrapper}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText]}
+          inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
         />
         <Input
@@ -101,10 +115,17 @@ const SignUp = () => {
           }}
           value={pinCode}
           keyboardType="numeric"
-          secureTextEntry 
-          leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
+          secureTextEntry
+          maxLength={4}
+          leftIcon={
+            <View style={styles.iconContainer}>
+              <Icon name="lock" type="material" color="#FFFFFF" />
+              <View style={styles.separator} />
+            </View>
+          }
+          containerStyle={styles.inputWrapper}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText]}
+          inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
         />
         <Input
@@ -116,10 +137,17 @@ const SignUp = () => {
           }}
           value={confirmPinCode}
           keyboardType="numeric"
-          secureTextEntry 
-          leftIcon={<Icon name="lock" type="material" color="#FFFFFF" />}
+          secureTextEntry
+          maxLength={4}
+          leftIcon={
+            <View style={styles.iconContainer}>
+              <Icon name="lock" type="material" color="#FFFFFF" />
+              <View style={styles.separator} />
+            </View>
+          }
+          containerStyle={styles.inputWrapper}
           inputContainerStyle={styles.inputContainer}
-          inputStyle={[styles.inputText]}
+          inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
         />
         {errorMessage ? <ThemedText style={styles.errorText}>{errorMessage}</ThemedText> : null}
@@ -171,26 +199,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 32,
     marginTop: 5,
-    paddingVertical: 5,
-    lineHeight: 38,
+    paddingVertical: 10,
+    lineHeight: 45,
+    paddingHorizontal: 15,
+    borderRadius: 10,
   },
   form: {
     width: '100%',
     marginBottom: 20,
   },
   inputContainer: {
-    borderBottomWidth: 0, // Remove underline
+    borderBottomWidth: 0,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 25,
     paddingHorizontal: 15,
-    marginBottom: 10,
+    
+    height: 50,
+    width: '100%',
   },
   inputText: {
     color: '#FFFFFF',
-    paddingLeft: 20, // Add padding to create space for the icon
+    paddingLeft: 20,
+    fontSize: 16,
   },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: 10,
     width: '100%',
   },
   button: {
@@ -232,13 +265,29 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   flagIcon: {
-    width: 30,
-    height: 20,
-    marginRight: 10,
+    width: 24,
+    height: 16,
+    marginRight: 8,
   },
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 10,
+  },
+  countryCode: {
+    color: '#FFFFFF',
+    marginRight: 8,
+    fontSize: 16,
+  },
+  separator: {
+    height: 20,
+    width: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    marginHorizontal: 10,
+  },
+  inputWrapper: {
+    width: '100%',
+    paddingHorizontal: 0,
   },
 });
 

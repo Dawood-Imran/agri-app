@@ -34,6 +34,7 @@ const UserSelectionScreen = () => {
       <Image 
         source={require('../assets/Logo maker project (3)_processed.png')} 
         style={styles.logo}
+        resizeMode="contain"
       />
       <ThemedText style={styles.welcomeText}>{t('welcome')}</ThemedText>
       <ThemedText style={styles.questionText}>{t('andYouAre')}</ThemedText>
@@ -48,7 +49,11 @@ const UserSelectionScreen = () => {
             style={styles.button}
             onPress={() => handleUserSelection(user.type as 'Farmer' | 'Expert' | 'Buyer')}
           >
-            <Image source={user.icon} style={styles.icon} />
+            <Image 
+              source={user.icon} 
+              style={styles.icon}
+              resizeMode="contain"
+            />
             <ThemedText style={styles.buttonText}>{t(user.type.toLowerCase())}</ThemedText>
           </TouchableOpacity>
         ))}
@@ -74,10 +79,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   languagePicker: {
-    width: 150, // Reduced from 150
-    height: 10, // Reduced from 40
+    width: 150,
+    height: 10,
     color: '#FFC107',
-    fontSize: 14, // Added to make the text smaller
+    fontSize: 14,
   },
   logo: {
     width: 400,
@@ -107,6 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     marginBottom: 40,
+    marginTop: 20,
   },
   button: {
     alignItems: 'center',
