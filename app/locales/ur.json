@@ -47,5 +47,13 @@
   "All Fields Required": "تمام فیلڈز درکار ہیں",
   "agricultureSchemes": "زرعی اسکیمیں",
   "schemeDetails": "اسکیم کی تفصیلات",
-  "windspeed": "ہوا کی رفتار"
+  "windspeed": "ہوا کی رفتار",
+  "personalDetails": "ذاتی معلومات",
+  "update": "تازہ کریں",
+  "customerId": "کسٹمر آئی ڈی",
+  "dateOfBirth": "تاریخ پیدائش",
+  "contactDetails": "رابطے کی تفصیلات",
+  "phone": "فون",
+  "city": "شہر",
+  "address": "پتہ"
 }

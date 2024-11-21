@@ -42,38 +42,42 @@ const SchemeDetails = () => {
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Card containerStyle={styles.card}>
-          <ThemedText style={styles.schemeTitle}>
-            {scheme.Title}
-          </ThemedText>
-          
-          {scheme.Description && (
-            <ThemedText style={styles.description}>
-              {scheme.Description}
+          <Card.Title>
+            <ThemedText style={styles.schemeTitle}>
+              {scheme.Title}
             </ThemedText>
-          )}
-          
-          <ThemedText style={styles.termsTitle}>
-            {'شرائط و ضوابط'}
-          </ThemedText>
-          
-          <ThemedText style={styles.termsDescription}>
-            {'درج ذیل شرائط و ضوابط کو غور سے پڑھیں۔ یہ اسکیم کے لیے اہم معلومات فراہم کرتی ہیں۔'}
-          </ThemedText>
+          </Card.Title>
+          <Card.Divider />
+          <View>
+            {scheme.Description && (
+              <ThemedText style={styles.description}>
+                {scheme.Description}
+              </ThemedText>
+            )}
+            
+            <ThemedText style={styles.termsTitle}>
+              {'شرائط و ضوابط'}
+            </ThemedText>
+            
+            <ThemedText style={styles.termsDescription}>
+              {'درج ذیل شرائط و ضوابط کو غور سے پڑھیں۔ یہ اسکیم کے لیے اہم معلومات فراہم کرتی ہیں۔'}
+            </ThemedText>
 
-          {scheme.TableData && scheme.TableData.length > 0 && (
-            <View style={styles.tableContainer}>
-              {scheme.TableData.map((item, index) => (
-                <View key={index} style={styles.tableRow}>
-                  <ThemedText style={styles.conditionText}>
-                    {item.Condition}
-                  </ThemedText>
-                  <ThemedText style={styles.descriptionText}>
-                    {item.Description}
-                  </ThemedText>
-                </View>
-              ))}
-            </View>
-          )}
+            {scheme.TableData && scheme.TableData.length > 0 && (
+              <View style={styles.tableContainer}>
+                {scheme.TableData.map((item, index) => (
+                  <View key={index} style={styles.tableRow}>
+                    <ThemedText style={styles.conditionText}>
+                      {item.Condition}
+                    </ThemedText>
+                    <ThemedText style={styles.descriptionText}>
+                      {item.Description}
+                    </ThemedText>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
         </Card>
       </ScrollView>
     </ThemedView>
