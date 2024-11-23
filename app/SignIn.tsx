@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Dimensions, Image, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Image, Alert, ImageBackground } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
@@ -63,6 +63,7 @@ const SignIn = () => {
   };
 
   return (
+  
     <ThemedView style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={handleBack}>
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
@@ -139,6 +140,7 @@ const SignIn = () => {
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
+    
   );
 };
 
@@ -265,6 +267,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     marginHorizontal: 10,
   },
+  
 });
 
 export default SignIn;

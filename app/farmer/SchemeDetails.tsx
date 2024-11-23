@@ -1,11 +1,15 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import { StyleSheet, ScrollView, View, Dimensions, Image } from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 import { Card, Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 import schemes from '../../assets/scraped_data.json';
+
+const tractorImage = require('../../assets/images/farmer-icons/tractor_scheme-1.jpg');
+
+const { width } = Dimensions.get('window'); // Get the width of the device
 
 const SchemeDetails = () => {
   const { schemeIndex } = useLocalSearchParams<{ schemeIndex: string }>();
@@ -41,42 +45,36 @@ const SchemeDetails = () => {
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Card containerStyle={styles.card}>
+        {/* Display the tractor image only for the Tractor Scheme */}
+        {scheme.Title === "ٹرکٹر اسکیم" && (
+          <Card containerStyle={styles.imageCard}>
+            <Image source={tractorImage} style={styles.cardImage} />
+          </Card>
+        )}
+
+        <ThemedText style={styles.schemeTitle}>
+          {scheme.Title}
+        </ThemedText>
+        <ThemedText style={styles.bodyText}>
+          {scheme.Description}
+        </ThemedText>
+
+        {/* Display conditions in cards */}
+        <Card containerStyle={styles.conditionCard}>
           <Card.Title>
-            <ThemedText style={styles.schemeTitle}>
-              {scheme.Title}
-            </ThemedText>
+            <ThemedText style={styles.conditionTitle}>شرائط و ضوابط</ThemedText>
           </Card.Title>
           <Card.Divider />
           <View>
-            {scheme.Description && (
-              <ThemedText style={styles.description}>
-                {scheme.Description}
-              </ThemedText>
-            )}
-            
-            <ThemedText style={styles.termsTitle}>
-              {'شرائط و ضوابط'}
-            </ThemedText>
-            
-            <ThemedText style={styles.termsDescription}>
-              {'درج ذیل شرائط و ضوابط کو غور سے پڑھیں۔ یہ اسکیم کے لیے اہم معلومات فراہم کرتی ہیں۔'}
-            </ThemedText>
-
-            {scheme.TableData && scheme.TableData.length > 0 && (
-              <View style={styles.tableContainer}>
-                {scheme.TableData.map((item, index) => (
-                  <View key={index} style={styles.tableRow}>
-                    <ThemedText style={styles.conditionText}>
-                      {item.Condition}
-                    </ThemedText>
-                    <ThemedText style={styles.descriptionText}>
-                      {item.Description}
-                    </ThemedText>
-                  </View>
-                ))}
+            {scheme.TableData && scheme.TableData.length > 0 && scheme.TableData.map((item, index) => (
+              <View key={index} style={styles.conditionItem}>
+                
+                <View style={styles.conditionTextContainer}>
+                  <ThemedText style={styles.conditionText}>{item.Condition}</ThemedText>
+                  <ThemedText style={styles.conditionDescription}>{item.Description}</ThemedText>
+                </View>
               </View>
-            )}
+            ))}
           </View>
         </Card>
       </ScrollView>
@@ -93,15 +91,20 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 15,
   },
-  card: {
+  imageCard: {
     borderRadius: 10,
-    padding: 20,
+    marginBottom: 20,
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    marginBottom: 20,
+  },
+  cardImage: {
+    width: '100%', // Make the image responsive
+    height: 250, // Set a fixed height for better visibility
+    borderRadius: 10,
+    resizeMode: "contain", // Use contain to maintain aspect ratio
   },
   schemeTitle: {
     fontSize: 24,
@@ -113,50 +116,49 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     minHeight: 80,
   },
-  description: {
+  bodyText: {
     fontSize: 16,
     marginBottom: 20,
     lineHeight: 24,
     color: '#333',
     textAlign: 'right',
   },
-  termsTitle: {
+  conditionCard: {
+    borderRadius: 10,
+    padding: 15,
+    backgroundColor: '#fff',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  conditionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#FFC107',
-    textAlign: 'right',
-    lineHeight: 28,
+    color: '#333',
   },
-  termsDescription: {
-    fontSize: 14,
-    marginBottom: 20,
-    color: '#666',
-    fontStyle: 'italic',
-    textAlign: 'right',
-    lineHeight: 22,
+  conditionItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 5,
   },
-  tableContainer: {
-    marginTop: 10,
-  },
-  tableRow: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    paddingVertical: 15,
+  conditionTextContainer: {
+    marginLeft: 10,
+    flex: 1,
   },
   conditionText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#61B15A',
-    textAlign: 'right',
-    lineHeight: 24,
-  },
-  descriptionText: {
-    fontSize: 14,
-    lineHeight: 22,
     color: '#333',
     textAlign: 'right',
+  },
+  conditionDescription: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'right',
+  },
+  icon: {
+    marginRight: 10,
   },
 });
 

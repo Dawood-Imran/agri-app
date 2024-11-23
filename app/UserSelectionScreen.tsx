@@ -32,7 +32,7 @@ const UserSelectionScreen = () => {
         </Picker>
       </View>
       <Image 
-        source={require('../assets/Logo maker project (3)_processed.png')} 
+        source={require('../assets/app-logo-3.png')} 
         style={styles.logo}
         resizeMode="contain"
       />
@@ -85,9 +85,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   logo: {
-    width: 400,
-    height: 400,
-    marginBottom: 10,
+    width: 300,
+    height: 300,
+    marginBottom: 20,
+    borderRadius: 15,
+    
   },
   welcomeText: {
     marginTop: 10,

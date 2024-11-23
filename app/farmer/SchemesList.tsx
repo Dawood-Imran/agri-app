@@ -1,11 +1,14 @@
 import React from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, View, ImageBackground } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
 import { useRouter, useNavigation } from 'expo-router';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 import { Card, Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 import schemes from '../../assets/scraped_data.json';
+
+// Import the images
+const backgroundImage = require('../../assets/images/farmer-icons/pexels-saeed-ahmed-abbasi-480825745-16446598.jpg');
 
 const SchemesList = () => {
   const router = useRouter();
@@ -46,12 +49,24 @@ const SchemesList = () => {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/gettyimages-1068196174-612x612.jpg')}
+      source={backgroundImage}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
-      <View style={styles.overlay}>
+      <ThemedView style={styles.overlay}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
+          {/* Display the provided text for existing schemes */}
+          <View style={styles.textContainer}>
+            <ThemedText style={styles.titleText}>
+              کل کے لیے سرمایہ کاری
+            </ThemedText>
+            <ThemedText style={styles.bodyText}>
+              کاشتکاروں اور زرعی صنعت کاروں کی ضروریات کو پورا کرنے کے لیے زرعی ترقیاتی بینک لیڈ چھوٹے کسانوں کے ان کے مالی ضروریات پورا کرنے اور اپنے کنبوں کے لیے بہتر زندگی گزارنے کے لیے مالی تحفظ کے مسائل اور رہن کی بنیاد پر جدید زرعی سپلائی اور سروسز کی شناخت کرنے میں مدد کرنے کے لیے جدید اقدامات کرنے کی کوشش کرتا ہے۔
+            </ThemedText>
+          </View>
+
+          
+
           {schemes.map((scheme, index) => (
             <TouchableOpacity 
               key={index}
@@ -77,7 +92,7 @@ const SchemesList = () => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </View>
+      </ThemedView>
     </ImageBackground>
   );
 };
@@ -96,6 +111,30 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 15,
   },
+  textContainer: {
+    marginBottom: 20,
+    padding: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Slightly transparent background for text
+    borderRadius: 10,
+  },
+  titleText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  bodyText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'justify',
+  },
+  tractorImage: {
+    width: '100%', // Make the image responsive
+    height: 200, // Set a fixed height or adjust as needed
+    borderRadius: 10,
+    marginBottom: 10,
+  },
   card: {
     borderRadius: 10,
     marginBottom: 15,
@@ -106,12 +145,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     backgroundColor: 'rgba(255, 255, 255, 0.95)', // Slightly transparent cards
-    minHeight: 100,
-  },
-  cardContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   schemeTitle: {
     fontSize: 18,
@@ -120,8 +153,6 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right',
     lineHeight: 28,
-    paddingVertical: 5,
-    marginRight: 10,
   },
   chevron: {
     padding: 5,
