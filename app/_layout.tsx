@@ -11,11 +11,14 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useNavigation } from '@react-navigation/native';
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -34,8 +37,8 @@ export default function RootLayout() {
   }
 
   const headerLeft = () => (
-    <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-      <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
+    <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack() }>
+      <Icon name="arrow-back" type="material" color="#FFFFFF" size={30} />
     </TouchableOpacity>
   );
 
@@ -57,6 +60,8 @@ export default function RootLayout() {
         <Stack.Screen name="farmer/dashboard" options={{ headerShown: false }} />
         <Stack.Screen name="expert/dashboard" options={{ headerShown: false }} />
         <Stack.Screen name="buyer/dashboard" options={{ headerShown: false }} />
+        <Stack.Screen name = "farmer/CoinScreen" options={{ ...commonHeaderOptions,
+            title: t('Coin Screen'), }} />  
         <Stack.Screen 
           name="farmer/YieldPrediction" 
           options={{ 
@@ -96,9 +101,9 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
-
 const styles = {
   backButton: {
     marginLeft: 10,
   },
 };
+

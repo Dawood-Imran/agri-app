@@ -43,20 +43,23 @@ const FarmerDashboard = () => {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-        headerRight: () => (
-          <TouchableOpacity onPress={() => navigation.navigate('Coins' as never)}>
-            <CoinDisplay coins={coins} />
-          </TouchableOpacity>
-        ),
+        headerRight: () => {
+          
+          return (
+            <TouchableOpacity onPress={() => navigation.navigate('farmer/CoinScreen')}>
+              <CoinDisplay coins={coins} />
+            </TouchableOpacity>
+          );
+        },
       })}
     >
       <Tab.Screen name={t('menu')} component={MenuTab} />
       <Tab.Screen name={t('account')} component={AccountTab} />
-      <Tab.Screen 
+      {/* <Tab.Screen 
         name="Coins" 
         component={CoinScreen} 
         options={{ tabBarButton: () => null }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
