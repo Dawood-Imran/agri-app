@@ -3,63 +3,43 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { ThemedView } from '../../components/ThemedView';
 import { ThemedText } from '../../components/ThemedText';
 import { Icon } from 'react-native-elements';
-import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 
-const AccountTab = () => {
-  const { t } = useTranslation();
+const Settings = () => {
   const router = useRouter();
-
-  const menuItems = [
+  
+  const settingsItems = [
     {
-      title: 'Profile',
-      icon: 'person',
-      route: 'expert/Profile',
-      description: 'View and edit your profile'
+      title: 'Profile Settings',
+      icon: 'person-outline',
+      route: 'farmer/ProfileSettings',
+      description: 'Update your personal information'
     },
     {
-      title: 'Settings',
-      icon: 'settings',
-      route: 'expert/Settings',
-      description: 'App preferences and settings'
-    },
-    
-    {
-      title: 'Help',
-      icon: 'help',
-      route: 'expert/Help',
-      description: 'Get support and assistance'
-    },
-    {
-      title: 'Logout',
-      icon: 'logout',
-      route: '/',
-      description: 'Sign out from your account'
-    },
+      title: 'Change PIN Code',
+      icon: 'lock-outline',
+      route: 'farmer/ChangePinCode',
+      description: 'Change your security PIN'
+    }
   ];
 
-  const handleMenuPress = (route: string) => {
-    if (route === '/') {
-      // Handle logout logic here
-      router.push(route);
-    } else {
-      router.push(route as never);
-    }
+  const handleSettingPress = (route: string) => {
+    router.push(route as never);
   };
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.menuContainer}>
-        {menuItems.map((item, index) => (
-          <TouchableOpacity
-            key={index}
+      <View style={styles.settingsCard}>
+        {settingsItems.map((item, index) => (
+          <TouchableOpacity 
+            key={index} 
             style={[
-              styles.menuItem,
-              index === menuItems.length - 1 && styles.lastItem
+              styles.settingItem,
+              index === settingsItems.length - 1 && styles.lastItem
             ]}
-            onPress={() => handleMenuPress(item.route)}
+            onPress={() => handleSettingPress(item.route)}
           >
-            <View style={styles.menuItemContent}>
+            <View style={styles.settingContent}>
               <View style={styles.iconContainer}>
                 <Icon
                   name={item.icon}
@@ -69,8 +49,12 @@ const AccountTab = () => {
                 />
               </View>
               <View style={styles.textContainer}>
-                <ThemedText style={styles.menuText}>{t(item.title)}</ThemedText>
-                <ThemedText style={styles.menuDescription}>{item.description}</ThemedText>
+                <ThemedText style={styles.settingTitle}>
+                  {item.title}
+                </ThemedText>
+                <ThemedText style={styles.settingDescription}>
+                  {item.description}
+                </ThemedText>
               </View>
             </View>
             <Icon
@@ -94,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     
   },
-  menuContainer: {
+  settingsCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
     padding: 10,
@@ -104,7 +88,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-  menuItem: {
+  settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -116,7 +100,7 @@ const styles = StyleSheet.create({
   lastItem: {
     borderBottomWidth: 0,
   },
-  menuItemContent: {
+  settingContent: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
@@ -133,16 +117,16 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
   },
-  menuText: {
+  settingTitle: {
     fontSize: 16,
     color: '#333',
     fontWeight: '500',
+    marginBottom: 4,
   },
-  menuDescription: {
-    fontSize: 12,
+  settingDescription: {
+    fontSize: 14,
     color: '#666',
-    marginTop: 2,
   },
 });
 
-export default AccountTab;
+export default Settings; 

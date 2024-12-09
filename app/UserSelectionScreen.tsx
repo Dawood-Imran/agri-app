@@ -77,10 +77,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
     overflow: 'hidden',
+    width: 150,
+    height: 50,
   },
   languagePicker: {
     width: 150,
-    height: 10,
+    height: 50,
     color: '#FFC107',
     fontSize: 14,
   },

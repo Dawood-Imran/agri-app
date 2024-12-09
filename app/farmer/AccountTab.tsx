@@ -10,59 +10,67 @@ const AccountTab = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  // This would come from your user state/context in a real app
-  const farmerDetails = {
-    name: 'Dawood Imran',
-    phone: '995-057-5065',
-    city: 'Faisalabad',
-    address: '34 st. London'
-  };
+  const menuItems = [
+    {
+      title: 'Profile',
+      icon: 'person',
+      route: 'farmer/Profile',
+    },
+    {
+      title: 'Settings',
+      icon: 'settings',
+      route: 'farmer/Settings',
+    },
+    {
+      title: 'Help',
+      icon: 'help',
+      route: 'farmer/Help',
+    },
+    {
+      title: 'Logout',
+      icon: 'logout',
+      route: '/',
+    },
+  ];
 
-  const handleEditDetails = () => {
-    // Navigate to edit profile screen
-    router.push('/farmer/EditProfile');
+  const handleMenuPress = (route: string) => {
+    if (route === '/') {
+      // Handle logout logic here
+      router.push(route);
+    } else {
+      router.push(route as never);
+    }
   };
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.profileSection}>
-        <View style={styles.imageContainer}>
-          <Image 
-            source={require('../../assets/images/farmer-icons/farmer.png')}
-            style={styles.profileImage}
-          />
-          <ThemedText style={styles.changeImageText}>Change Image</ThemedText>
-        </View>
-        <ThemedText style={styles.name}>{farmerDetails.name}</ThemedText>
-      </View>
+      
 
-      <View style={styles.detailsCard}>
-        <View style={styles.cardHeader}>
-          <ThemedText style={styles.cardTitle}>{t('personalDetails')}</ThemedText>
-          <TouchableOpacity onPress={handleEditDetails} style={styles.editButton}>
-            <Icon name="edit" type="material" color="#61B15A" size={24} />
-            <ThemedText style={styles.editText}>{t('update')}</ThemedText>
+      <View style={styles.menuContainer}>
+        {menuItems.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.menuItem}
+            onPress={() => handleMenuPress(item.route)}
+          >
+            <View style={styles.menuItemContent}>
+              <Icon
+                name={item.icon}
+                type="material"
+                color="#61B15A"
+                size={24}
+                style={styles.menuIcon}
+              />
+              <ThemedText style={styles.menuText}>{t(item.title)}</ThemedText>
+            </View>
+            <Icon
+              name="chevron-right"
+              type="material"
+              color="#61B15A"
+              size={24}
+            />
           </TouchableOpacity>
-        </View>
-
-        <View style={styles.detailsContainer}>
-          
-
-          <View style={styles.detailRow}>
-            <ThemedText style={styles.label}>{t('phone')}</ThemedText>
-            <ThemedText style={styles.value}>{farmerDetails.phone}</ThemedText>
-          </View>
-
-          <View style={styles.detailRow}>
-            <ThemedText style={styles.label}>{t('city')}</ThemedText>
-            <ThemedText style={styles.value}>{farmerDetails.city}</ThemedText>
-          </View>
-
-          <View style={styles.detailRow}>
-            <ThemedText style={styles.label}>{t('address')}</ThemedText>
-            <ThemedText style={styles.value}>{farmerDetails.address}</ThemedText>
-          </View>
-        </View>
+        ))}
       </View>
     </ThemedView>
   );
@@ -72,79 +80,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+    justifyContent: 'center',
   },
-  profileSection: {
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#61B15A',
-  },
-  imageContainer: {
-    alignItems: 'center',
-  },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 10,
+ 
+  menuContainer: {
     backgroundColor: '#FFFFFF',
-  },
-  changeImageText: {
-    color: '#FFC107',
-    fontSize: 14,
-    marginTop: 5,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginTop: 10,
-  },
-  detailsCard: {
-    backgroundColor: '#FFFFFF',
+    
     borderRadius: 15,
     margin: 15,
-    padding: 20,
+    padding: 10,
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-  cardHeader: {
+  menuItem: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
   },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  editButton: {
+  menuItemContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  editText: {
-    color: '#61B15A',
-    marginLeft: 5,
-    fontSize: 16,
+  menuIcon: {
+    marginRight: 15,
   },
-  detailsContainer: {
-    gap: 15,
-  },
-  detailRow: {
-    marginBottom: 10,
-  },
-  label: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 5,
-  },
-  value: {
+  menuText: {
     fontSize: 16,
     color: '#333',
-    fontWeight: '500',
   },
 });
 

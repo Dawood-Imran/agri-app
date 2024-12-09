@@ -97,6 +97,76 @@ export default function RootLayout() {
             title: t('fieldDetails'),
           }} 
         />
+        <Stack.Screen 
+          name="farmer/Profile" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Profile'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/Settings" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Settings'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/Help" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Help'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/ProfileSettings" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Profile Settings'),
+          }} 
+        />
+        <Stack.Screen 
+          name="farmer/ChangePinCode" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Change PIN Code'),
+          }} 
+        />
+        <Stack.Screen 
+          name="expert/Profile" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Profile'),
+          }} 
+        />
+        <Stack.Screen 
+          name="expert/Settings" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Settings'),
+          }} 
+        />
+        <Stack.Screen 
+          name="expert/Expertise" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Expertise'),
+          }} 
+        />
+        <Stack.Screen 
+          name="expert/Help" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Help'),
+          }} 
+        />
+        <Stack.Screen 
+          name="expert/CoinScreen" 
+          options={{ 
+            ...commonHeaderOptions,
+            title: t('Coins'),
+          }} 
+        />
       </Stack>
     </ThemeProvider>
   );
