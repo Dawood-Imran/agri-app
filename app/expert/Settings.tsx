@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     padding: 15,
     justifyContent: 'center',
-    alignItems: 'center',
+   
   },
   settingsCard: {
     backgroundColor: '#FFFFFF',

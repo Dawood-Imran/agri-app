@@ -18,70 +18,63 @@ const ExpertDashboard = () => {
 
   return (
     <Tab.Navigator
-  screenOptions={({ route }) => ({
-    tabBarIcon: ({ focused, color, size }) => {
-      let iconName;
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
 
-      if (route.name === t('messages')) {
-        iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
-      } else if (route.name === t('account')) {
-        iconName = focused ? 'person' : 'person-outline';
-      }
+        if (route.name === t('messages')) {
+          iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+        } else if (route.name === t('account')) {
+          iconName = focused ? 'person' : 'person-outline';
+        }
 
-      return <Icon name={iconName as string} type="ionicon" size={size} color={color} />;
-    },
-    tabBarActiveTintColor: '#FFC107',
-    tabBarInactiveTintColor: '#FFFFFF',
-    tabBarStyle: {
-      backgroundColor: '#61B15A',
-      paddingVertical: 5, // Add vertical padding for spacing
-      height: 60, // Increase height for better spacing
-      borderTopWidth: 1,
-      borderTopColor: '#ccc',
-    },
-    tabBarLabelStyle: {
-      fontSize: 14, // Slightly increase font size
-      fontWeight: '600',
-      paddingBottom: 5, // Add padding to position labels better
-    },
-    headerShown: true,
-    headerStyle: {
-      backgroundColor: '#61B15A',
-    },
-    headerTintColor: '#FFFFFF',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    headerRight: () => (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('expert/CoinScreen' as never)}
-        style={{ marginRight: 15 }} // Adjust the margin for proper alignment
-      >
-        <CoinDisplay coins={coins} />
-      </TouchableOpacity>
-    ),
-  })}
->
-  <Tab.Screen
-    name={t('messages')}
-    component={MessagesTab}
-    options={{
-      tabBarLabelStyle: { fontSize: 12 },
-    }}
-  />
-  <Tab.Screen
-    name={t('account')}
-    component={AccountTab}
-    options={{
-      tabBarLabelStyle: { fontSize: 12 },
-    }}
-  />
-  <Tab.Screen
-    name="Coins"
-    component={CoinScreen}
-    options={{ tabBarButton: () => null }}
-  />
-</Tab.Navigator>
+        return <Icon name={iconName as string} type="ionicon" size={size} color={color} />;
+      },
+      tabBarActiveTintColor: '#FFC107',
+      tabBarInactiveTintColor: '#FFFFFF',
+      tabBarStyle: {
+        backgroundColor: '#61B15A',
+        height: 60, // Adjust for consistent height
+        paddingVertical: 5, // Similar to FarmerDashboard
+      },
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: '#61B15A',
+      },
+      headerTintColor: '#FFFFFF',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('expert/CoinScreen' as never)}
+          style={{ marginRight: 15 }} // Align with FarmerDashboard
+        >
+          <CoinDisplay coins={coins} />
+        </TouchableOpacity>
+      ),
+    })}
+  >
+    <Tab.Screen 
+      name={t('messages')} 
+      component={MessagesTab} 
+      options={{
+        tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // Match FarmerDashboard
+      }}
+    />
+    <Tab.Screen 
+      name={t('account')} 
+      component={AccountTab} 
+      options={{
+        tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // Match FarmerDashboard
+      }}
+    />
+    <Tab.Screen 
+      name="Coins" 
+      component={CoinScreen} 
+      options={{ tabBarButton: () => null }}
+    />
+  </Tab.Navigator>
 
   );
 };
