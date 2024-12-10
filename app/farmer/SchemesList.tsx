@@ -1,24 +1,24 @@
 import React from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, View, ImageBackground, ActivityIndicator } from 'react-native';
 import { useRouter, useNavigation } from 'expo-router';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 import { Card, Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-import schemes from '../../assets/scraped_data.json';
+import { useSchemes } from '../hooks/useSchemes';
 
-// Import the images
 const backgroundImage = require('../../assets/images/farmer-icons/pexels-saeed-ahmed-abbasi-480825745-16446598.jpg');
 
 const SchemesList = () => {
   const router = useRouter();
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
+  const { schemes, loading, error } = useSchemes();
 
-  const handleSchemePress = React.useCallback((schemeIndex: number) => {
+  const handleSchemePress = React.useCallback((schemeId: string) => {
     router.push({ 
       pathname: '/farmer/SchemeDetails' as any,
-      params: { schemeIndex }
+      params: { schemeId }
     });
   }, [router]);
 
@@ -47,6 +47,22 @@ const SchemesList = () => {
     });
   }, [navigation, t]);
 
+  if (loading) {
+    return (
+      <ThemedView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#61B15A" />
+      </ThemedView>
+    );
+  }
+
+  if (error) {
+    return (
+      <ThemedView style={styles.errorContainer}>
+        <ThemedText style={styles.errorText}>{error}</ThemedText>
+      </ThemedView>
+    );
+  }
+
   return (
     <ImageBackground
       source={backgroundImage}
@@ -55,22 +71,19 @@ const SchemesList = () => {
     >
       <ThemedView style={styles.overlay}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Display the provided text for existing schemes */}
           <View style={styles.textContainer}>
             <ThemedText style={styles.titleText}>
               کل کے لیے سرمایہ کاری
             </ThemedText>
             <ThemedText style={styles.bodyText}>
-              کاشتکاروں اور زرعی صنعت کاروں کی ضروریات کو پورا کرنے کے لیے زرعی ترقیاتی بینک لیڈ چھوٹے کسانوں کے ان کے مالی ضروریات پورا کرنے اور اپنے کنبوں کے لیے بہتر زندگی گزارنے کے لیے مالی تحفظ کے مسائل اور رہن کی بنیاد پر جدید زرعی سپلائی اور سروسز کی شناخت کرنے میں مدد کرنے کے لیے جدید اقدامات کرنے کی کوشش کرتا ہے۔
+              کاشتکاروں اور زرعی صنعت کاروں کی ضروریا�� کو پورا کرنے کے لیے زرعی ترقیاتی بینک لیڈ چھوٹے کسانوں کے ان کے مالی ضروریات پورا کرنے اور اپنے کنبوں کے لیے بہتر زندگی گزارنے کے لیے مالی تحفظ کے مسائل اور رہن کی بنیاد پر جدید زرعی سپلائی اور سروسز کی شناخت کرنے میں مدد کرنے کے لیے جدید اقدامات کرنے کی کوشش کرتا ہے۔
             </ThemedText>
           </View>
 
-          
-
-          {schemes.map((scheme, index) => (
+          {schemes.map((scheme) => (
             <TouchableOpacity 
-              key={index}
-              onPress={() => handleSchemePress(index)}
+              key={scheme.id}
+              onPress={() => handleSchemePress(scheme.id)}
             >
               <Card containerStyle={styles.card}>
                 <View style={styles.cardContent}>
@@ -156,6 +169,26 @@ const styles = StyleSheet.create({
   },
   chevron: {
     padding: 5,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'red',
+  },
+  cardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 

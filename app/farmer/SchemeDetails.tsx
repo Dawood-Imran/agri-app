@@ -1,21 +1,23 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, ScrollView, View, Dimensions, Image, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 import { Card, Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-import schemes from '../../assets/scraped_data.json';
+import { useSchemes } from '../hooks/useSchemes';
 
 const tractorImage = require('../../assets/images/farmer-icons/tractor_scheme-1.jpg');
 
-const { width } = Dimensions.get('window'); // Get the width of the device
+const { width } = Dimensions.get('window');
 
 const SchemeDetails = () => {
-  const { schemeIndex } = useLocalSearchParams<{ schemeIndex: string }>();
+  const { schemeId } = useLocalSearchParams<{ schemeId: string }>();
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
-  const scheme = schemes[Number(schemeIndex)];
+  const { schemes, loading, error } = useSchemes();
+  
+  const scheme = schemes.find(s => s.id === schemeId);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -42,10 +44,27 @@ const SchemeDetails = () => {
     });
   }, [navigation, t]);
 
+  if (loading) {
+    return (
+      <ThemedView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#61B15A" />
+      </ThemedView>
+    );
+  }
+
+  if (error || !scheme) {
+    return (
+      <ThemedView style={styles.errorContainer}>
+        <ThemedText style={styles.errorText}>
+          {error || 'Scheme not found'}
+        </ThemedText>
+      </ThemedView>
+    );
+  }
+
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Display the tractor image only for the Tractor Scheme */}
         {scheme.Title === "ٹرکٹر اسکیم" && (
           <Card containerStyle={styles.imageCard}>
             <Image source={tractorImage} style={styles.cardImage} />
@@ -59,7 +78,6 @@ const SchemeDetails = () => {
           {scheme.Description}
         </ThemedText>
 
-        {/* Display conditions in cards */}
         <Card containerStyle={styles.conditionCard}>
           <Card.Title>
             <ThemedText style={styles.conditionTitle}>شرائط و ضوابط</ThemedText>
@@ -68,7 +86,6 @@ const SchemeDetails = () => {
           <View>
             {scheme.TableData && scheme.TableData.length > 0 && scheme.TableData.map((item, index) => (
               <View key={index} style={styles.conditionItem}>
-                
                 <View style={styles.conditionTextContainer}>
                   <ThemedText style={styles.conditionText}>{item.Condition}</ThemedText>
                   <ThemedText style={styles.conditionDescription}>{item.Description}</ThemedText>
@@ -159,6 +176,22 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
   },
 });
 
