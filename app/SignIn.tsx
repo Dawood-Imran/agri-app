@@ -38,15 +38,25 @@ const SignIn = () => {
     }
 
     // Here you would typically handle authentication
-    // For now, we'll just navigate to the appropriate dashboard
-    if (userType.toLowerCase() === 'farmer') {
-      router.replace('/farmer/dashboard');
-    } else if (userType.toLowerCase() === 'expert') {
-      router.replace('/expert/dashboard');
-    } else if (userType.toLowerCase() === 'buyer') {
-      router.replace('/buyer/dashboard');
+    if (userType) {
+      switch(userType.toLowerCase()) {
+        case 'farmer':
+          router.replace('/farmer/dashboard');
+          break;
+        case 'expert':
+          router.replace('/expert/dashboard');
+          break;
+        case 'buyer':
+          router.replace('/buyer/dashboard');
+          break;
+        default:
+          Alert.alert(t('error'), 'Invalid user type');
+          router.replace('/UserSelectionScreen');
+      }
     } else {
-      router.replace(`/${userType.toLowerCase()}Dashboard` as any);
+      // Handle case when userType is not available
+      Alert.alert(t('error'), 'Please select user type');
+      router.replace('/UserSelectionScreen');
     }
   };
 
@@ -87,9 +97,13 @@ const SignIn = () => {
       </TouchableOpacity>
       <View style={styles.titleContainer}>
         <ThemedText style={styles.titleMain}>{t('Sign In')}</ThemedText>
-        <ThemedText style={styles.titleSub}>
-          {t('as')} <ThemedText style={styles.userType}>{t(userType.toLowerCase())}</ThemedText>
-        </ThemedText>
+        {userType && (
+          <ThemedText style={styles.titleSub}>
+            {t('as')} <ThemedText style={styles.userType}>
+              {t(userType.toLowerCase())}
+            </ThemedText>
+          </ThemedText>
+        )}
       </View>
       <View style={styles.form}>
         <View style={styles.inputContainer}>

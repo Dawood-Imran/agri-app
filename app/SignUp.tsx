@@ -92,9 +92,13 @@ const SignUp = () => {
       </TouchableOpacity>
       <View style={styles.titleContainer}>
         <ThemedText style={styles.titleMain}>{t('Create Account')}</ThemedText>
-        <ThemedText style={styles.titleSub}>
-          {t('as')} <ThemedText style={styles.userType}>{t(userType.toLowerCase())}</ThemedText>
-        </ThemedText>
+        {userType && (
+          <ThemedText style={styles.titleSub}>
+            {t('as')} <ThemedText style={styles.userType}>
+              {t(userType.toLowerCase())}
+            </ThemedText>
+          </ThemedText>
+        )}
       </View>
       <View style={styles.form}>
         <Input

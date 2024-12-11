@@ -105,5 +105,21 @@
   "Earn Coins": "Earn Coins",
   "Spent": "Spent",
   "Earned": "Earned",
-  "Date": "Date"
+  "Date": "Date",
+  "Orders": "Orders",
+  "Order History": "Order History",
+  "Active Orders": "Active Orders",
+  "Past Orders": "Past Orders",
+  "Order Details": "Order Details",
+  "Order Status": "Order Status",
+  "Order Date": "Order Date",
+  "Total Amount": "Total Amount",
+  "Payment Status": "Payment Status",
+  "Delivery Status": "Delivery Status",
+  "Track Order": "Track Order",
+  "Cancel Order": "Cancel Order",
+  "Reorder": "Reorder",
+  "Payment Method": "Payment Method",
+  "Shipping Address": "Shipping Address",
+  "Billing Address": "Billing Address"
 }

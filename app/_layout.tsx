@@ -170,6 +170,39 @@ export default function RootLayout() {
         />
         <Stack.Screen name="ForgotPin" options={{ headerShown: false }} />
         <Stack.Screen name="VerifyPin" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="buyer/Profile"
+          options={{
+            
+            ...commonHeaderOptions,
+            title: t('Profile'),
+          }}
+        />
+        
+        <Stack.Screen
+          name="buyer/Settings"
+          options={{
+            ...commonHeaderOptions,
+            title: t('Settings'),
+            
+          }}
+        />
+        <Stack.Screen
+          name="buyer/Help"
+          options={{
+              ...commonHeaderOptions,
+            title: t('Help'),
+          }}
+        />
+
+        <Stack.Screen
+          name="Help"
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        
       </Stack>
     </ThemeProvider>
   );

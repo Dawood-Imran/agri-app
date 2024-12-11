@@ -1,12 +1,77 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { ThemedView } from '../../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
+import { Icon } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 
 const AccountTab = () => {
+  const { t } = useTranslation();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    router.replace('/');
+  };
+
+  const menuItems = [
+    {
+      title: t('Profile'),
+      icon: 'person-outline',
+      onPress: () => router.push('/buyer/Profile'),
+      color: '#4CAF50', // Green
+    },
+    
+    {
+      title: t('Settings'),
+      icon: 'settings',
+      onPress: () => router.push('/buyer/Settings'),
+      color: '#2196F3', // Blue
+    },
+    {
+      title: t('Help'),
+      icon: 'help-outline',
+      onPress: () => router.push('/buyer/Help'),
+      color: '#9C27B0', // Purple
+    },
+  ];
+
   return (
     <ThemedView style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome to Account</Text>
+      <TouchableOpacity 
+        style={styles.logoutButton}
+        onPress={handleLogout}
+      >
+        <Icon name="logout" type="material" color="#FF4444" size={24} />
+        <ThemedText style={styles.logoutText}>{t('Logout')}</ThemedText>
+      </TouchableOpacity>
+
+      <View style={styles.menuContainer}>
+        {menuItems.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.menuCard}
+            onPress={item.onPress}
+          >
+            <View style={[styles.iconCircle, { backgroundColor: `${item.color}20` }]}>
+              <Icon
+                name={item.icon}
+                type="material"
+                color={item.color}
+                size={28}
+              />
+            </View>
+            <ThemedText style={styles.menuText}>{item.title}</ThemedText>
+            <Icon 
+              name="chevron-right" 
+              type="material" 
+              color={item.color} 
+              size={24}
+              style={styles.chevron}
+            />
+          </TouchableOpacity>
+        ))}
+      </View>
     </ThemedView>
   );
 };
@@ -14,13 +79,60 @@ const AccountTab = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5F5F5',
   },
-  welcomeText: {
-    fontSize: 24,
+  menuContainer: {
+    padding: 20,
+    paddingTop: 60,
+  },
+  menuCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 15,
+    margin: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  iconCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  menuText: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '500',
     color: '#333',
+  },
+  chevron: {
+    opacity: 0.7,
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 68, 68, 0.1)',
+    padding: 8,
+    borderRadius: 20,
+    zIndex: 1,
+  },
+  logoutText: {
+    color: '#FF4444',
+    marginLeft: 5,
+    fontWeight: 'bold',
   },
 });
 

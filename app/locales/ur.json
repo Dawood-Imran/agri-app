@@ -115,5 +115,21 @@
   "Earn Coins": "سکے کمائیں",
   "Spent": "خرچ کیا",
   "Earned": "کمایا",
-  "Date": "تاریخ"
+  "Date": "تاریخ",
+  "Orders": "آرڈرز",
+  "Order History": "آرڈر کی تاریخ",
+  "Active Orders": "فعال آرڈرز",
+  "Past Orders": "گزشتہ آرڈرز",
+  "Order Details": "آرڈر کی تفصیلات",
+  "Order Status": "آرڈر کی حیثیت",
+  "Order Date": "آرڈر کی تاریخ",
+  "Total Amount": "کل رقم",
+  "Payment Status": "ادائیگی کی حیثیت",
+  "Delivery Status": "ترسیل کی حیثیت",
+  "Track Order": "آرڈر کو ٹریک کریں",
+  "Cancel Order": "آرڈر منسوخ کریں",
+  "Reorder": "دوبارہ آرڈر کریں",
+  "Payment Method": "ادائیگی کا طریقہ",
+  "Shipping Address": "شپنگ ایڈریس",
+  "Billing Address": "بلنگ ایڈریس"
 }

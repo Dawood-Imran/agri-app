@@ -10,74 +10,64 @@ const AccountTab = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const handleLogout = () => {
+    router.replace('/SignIn');
+  };
+
   const menuItems = [
     {
-      title: 'Profile',
-      icon: 'person',
-      route: 'expert/Profile',
-      description: 'View and edit your profile'
+      title: t('Profile'),
+      icon: 'person-outline',
+      onPress: () => router.push('/expert/Profile'),
+      color: '#4CAF50', // Green
     },
     {
-      title: 'Settings',
+      title: t('Settings'),
       icon: 'settings',
-      route: 'expert/Settings',
-      description: 'App preferences and settings'
+      onPress: () => router.push('/expert/Settings'),
+      color: '#2196F3', // Blue
     },
     
     {
-      title: 'Help',
-      icon: 'help',
-      route: 'expert/Help',
-      description: 'Get support and assistance'
-    },
-    {
-      title: 'Logout',
-      icon: 'logout',
-      route: '/',
-      description: 'Sign out from your account'
+      title: t('Help'),
+      icon: 'help-outline',
+      onPress: () => router.push('/expert/Help'),
+      color: '#9C27B0', // Purple
     },
   ];
 
-  const handleMenuPress = (route: string) => {
-    if (route === '/') {
-      // Handle logout logic here
-      router.push(route);
-    } else {
-      router.push(route as never);
-    }
-  };
-
   return (
     <ThemedView style={styles.container}>
+      <TouchableOpacity 
+        style={styles.logoutButton}
+        onPress={handleLogout}
+      >
+        <Icon name="logout" type="material" color="#FF4444" size={24} />
+        <ThemedText style={styles.logoutText}>{t('Logout')}</ThemedText>
+      </TouchableOpacity>
+
       <View style={styles.menuContainer}>
         {menuItems.map((item, index) => (
           <TouchableOpacity
             key={index}
-            style={[
-              styles.menuItem,
-              index === menuItems.length - 1 && styles.lastItem
-            ]}
-            onPress={() => handleMenuPress(item.route)}
+            style={styles.menuCard}
+            onPress={item.onPress}
           >
-            <View style={styles.menuItemContent}>
-              <View style={styles.iconContainer}>
-                <Icon
-                  name={item.icon}
-                  type="material"
-                  color="#61B15A"
-                  size={24}
-                />
-              </View>
-              <View style={styles.textContainer}>
-                <ThemedText style={styles.menuText}>{t(item.title)}</ThemedText>
-                <ThemedText style={styles.menuDescription}>{item.description}</ThemedText>
-              </View>
+            <View style={[styles.iconCircle, { backgroundColor: `${item.color}20` }]}>
+              <Icon
+                name={item.icon}
+                type="material"
+                color={item.color}
+                size={28}
+              />
             </View>
-            <Icon
-              name="chevron-right"
-              type="material"
-              color="#61B15A"
+            <ThemedText style={styles.menuText}>{item.title}</ThemedText>
+            <Icon 
+              name="chevron-right" 
+              type="material" 
+              color={item.color} 
               size={24}
+              style={styles.chevron}
             />
           </TouchableOpacity>
         ))}
@@ -90,58 +80,59 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
-    padding: 15,
-    justifyContent: 'center',
-    
   },
   menuContainer: {
+    padding: 20,
+    paddingTop: 60, // To account for logout button
+  },
+  menuCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
+    padding: 20,
     borderRadius: 15,
-    padding: 10,
-    elevation: 3,
+    margin: 15,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
     shadowRadius: 3.84,
+    elevation: 5,
   },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-  },
-  lastItem: {
-    borderBottomWidth: 0,
-  },
-  menuItemContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F5F5F5',
+  iconCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
   },
-  textContainer: {
-    flex: 1,
-  },
   menuText: {
+    flex: 1,
     fontSize: 16,
-    color: '#333',
     fontWeight: '500',
+    color: '#333',
   },
-  menuDescription: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 2,
+  chevron: {
+    opacity: 0.7,
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 68, 68, 0.1)',
+    padding: 8,
+    borderRadius: 20,
+    zIndex: 1,
+  },
+  logoutText: {
+    color: '#FF4444',
+    marginLeft: 5,
+    fontWeight: 'bold',
   },
 });
 
