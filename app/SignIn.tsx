@@ -18,6 +18,19 @@ const SignIn = () => {
 
   const isRTL = i18n.language === 'ur';
 
+  const validatePhoneNumber = (text: string) => {
+    const cleanedText = text.replace(/[\s-]/g, '');
+    
+    if (cleanedText.length <= 10 && (!cleanedText.length || cleanedText.startsWith('3'))) {
+      setPhoneNumber(cleanedText);
+      setErrorMessage('');
+    } else if (cleanedText.length > 10) {
+      setErrorMessage(t('Phone number cannot exceed 10 digits'));
+    } else if (!cleanedText.startsWith('3')) {
+      setErrorMessage(t('Phone number must start with 3'));
+    }
+  };
+
   const handleSignIn = () => {
     if (!phoneNumber.trim() || !pinCode.trim()) {
       Alert.alert(t('error'), t('All Fields Required'));
@@ -62,6 +75,10 @@ const SignIn = () => {
     router.push('/UserSelectionScreen');
   };
 
+  const handleForgotPin = () => {
+    router.push('/ForgotPin');
+  };
+
   return (
   
     <ThemedView style={styles.container}>
@@ -78,14 +95,9 @@ const SignIn = () => {
         <View style={styles.inputContainer}>
           <Input
             placeholder="3XXXXXXXXX"
-            onChangeText={(text) => {
-              // Only allow 10 digits and must start with 3
-              if (text.length <= 10 && (!text.length || text.startsWith('3'))) {
-                setPhoneNumber(text);
-              }
-            }}
+            onChangeText={validatePhoneNumber}
             value={phoneNumber}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             leftIcon={
               <View style={[styles.iconContainer, { flexDirection: 'row', alignItems: 'center' }]}>
                 <Image source={require('../assets/pakistan-flag.jpg')} style={styles.flagIcon} />
@@ -98,6 +110,8 @@ const SignIn = () => {
             containerStyle={styles.inputField}
             underlineColorAndroid="transparent"
             inputContainerStyle={{ borderBottomWidth: 0 }}
+            errorMessage={errorMessage}
+            errorStyle={styles.errorText}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -124,8 +138,15 @@ const SignIn = () => {
             underlineColorAndroid="transparent"
             inputContainerStyle={{ borderBottomWidth: 0 }}
           />
+          <TouchableOpacity 
+            onPress={handleForgotPin} 
+            style={styles.forgotPinContainer}
+          >
+            <ThemedText style={styles.forgotPinText}>
+              {t('Forgot PIN?')}
+            </ThemedText>
+          </TouchableOpacity>
         </View>
-        {errorMessage ? <ThemedText style={styles.errorText}>{errorMessage}</ThemedText> : null}
         <Button
           title={t('Sign In')} // Ensure this is translated
           onPress={handleSignIn}
@@ -157,6 +178,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingTop: 30,
+    marginTop: 20,
   },
   titleMain: {
     fontSize: 36,
@@ -169,17 +191,20 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: '#FFFFFF',
     marginTop: 5,
+    paddingVertical: 10,
   },
   userType: {
     color: '#FFC107',
     fontWeight: 'bold',
     fontSize: 32,
     marginTop: 5,
-    paddingVertical: 10,
+    paddingVertical: 15,
     lineHeight: 45,
     paddingHorizontal: 15,
-    
+    textAlign: 'center',
+    minWidth: 150,
     borderRadius: 10,
+    
   },
   form: {
     width: '100%',
@@ -206,7 +231,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 20,
-    width: '100%',
+    width: '80%',
+    left: '10%',
   },
   button: {
     backgroundColor: '#FFC107',
@@ -243,8 +269,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   errorText: {
-    color: 'red',
+    color: '#FF6B6B',
+    fontSize: 12,
     marginTop: 5,
+    marginBottom: 5,
+    textAlign: 'left',
+    marginLeft: 15,
   },
   flagIcon: {
     width: 24,
@@ -267,7 +297,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     marginHorizontal: 10,
   },
-  
+  forgotPinContainer: {
+    alignItems: 'flex-end',
+    paddingRight: 15,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  forgotPinText: {
+    color: '#FFC107',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+    textDecorationColor: '#FFC107',
+  },
 });
 
 export default SignIn;

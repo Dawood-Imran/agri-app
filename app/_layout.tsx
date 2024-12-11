@@ -52,6 +52,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
+        <Stack.Screen name="SplashScreen" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="LanguageSelection" options={{ headerShown: false }} />
         <Stack.Screen name="UserSelectionScreen" options={{ headerShown: false }} />
@@ -167,6 +168,8 @@ export default function RootLayout() {
             title: t('Coins'),
           }} 
         />
+        <Stack.Screen name="ForgotPin" options={{ headerShown: false }} />
+        <Stack.Screen name="VerifyPin" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Image, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
@@ -46,10 +46,38 @@ const SignUp = () => {
     return true;
   };
 
+  const validatePhoneNumber = (text: string) => {
+    const cleanedText = text.replace(/[\s-]/g, '');
+    
+    if (cleanedText.length <= 10 && (!cleanedText.length || cleanedText.startsWith('3'))) {
+      setPhoneNumber(cleanedText);
+      setErrorMessage('');
+    } else if (cleanedText.length > 10) {
+      setErrorMessage(t('Phone number cannot exceed 10 digits'));
+    } else if (!cleanedText.startsWith('3')) {
+      setErrorMessage(t('Phone number must start with 3'));
+    }
+  };
+
   const handleSignUp = () => {
     if (validateForm()) {
-      alert(t('Account Created Successfully'));
-      router.replace({ pathname: '/SignIn', params: { userType } });
+      Alert.alert(
+        t('Confirm'),
+        t('Are you sure you want to create an account with phone number +92') + phoneNumber + '?',
+        [
+          {
+            text: t('Cancel'),
+            style: 'cancel'
+          },
+          {
+            text: t('Yes'),
+            onPress: () => {
+              alert(t('Account Created Successfully'));
+              router.replace({ pathname: '/SignIn', params: { userType } });
+            }
+          }
+        ]
+      );
     }
   };
 
@@ -86,14 +114,9 @@ const SignUp = () => {
         />
         <Input
           placeholder="3XXXXXXXXX"
-          onChangeText={(text) => {
-            // Only allow 10 digits and must start with 3
-            if (text.length <= 10 && (!text.length || text.startsWith('3'))) {
-              setPhoneNumber(text);
-            }
-          }}
+          onChangeText={validatePhoneNumber}
           value={phoneNumber}
-          keyboardType="phone-pad"
+          keyboardType="numeric"
           leftIcon={
             <View style={[styles.iconContainer, { flexDirection: 'row', alignItems: 'center' }]}>
               <Image source={require('../assets/pakistan-flag.jpg')} style={styles.flagIcon} />
@@ -105,6 +128,8 @@ const SignUp = () => {
           inputContainerStyle={styles.inputContainer}
           inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
+          errorMessage={errorMessage}
+          errorStyle={styles.errorText}
         />
         <Input
           placeholder={t("Enter Pin Code")}
@@ -150,7 +175,6 @@ const SignUp = () => {
           inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
         />
-        {errorMessage ? <ThemedText style={styles.errorText}>{errorMessage}</ThemedText> : null}
         <Button
           title={t('Create Account')}
           onPress={handleSignUp}
@@ -193,6 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: '#FFFFFF',
     marginTop: 5,
+    paddingVertical: 10,
   },
   userType: {
     color: '#FFC107',
@@ -224,7 +249,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10,
-    width: '100%',
+    width: '80%',
+    left: '10%',
   },
   button: {
     backgroundColor: '#FFC107',
