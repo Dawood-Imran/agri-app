@@ -40,7 +40,7 @@ const VerifyPin = () => {
       <View style={styles.form}>
         <View style={styles.inputContainer}>
           <Input
-            placeholder={t('Enter PIN')}
+            placeholder={t('Enter Pin Code')}
             onChangeText={(text) => {
               if (text.length <= 4) {
                 setPin(text);
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
         paddingTop: 30,
       },
       titleMain: {
-        fontSize: 36,
-        color: '#FFFFFF',
+        fontSize: 30,
+        color: '#FFC107',
         fontWeight: 'bold',
         marginBottom: 10,
         lineHeight: 42,
