@@ -96,6 +96,12 @@ const MenuTab = () => {
     }
   ];
 
+  const ThemedTextWithDefaults = ({ style, children, ...props }) => (
+    <ThemedText style={style} {...props}>
+      {children}
+    </ThemedText>
+  );
+
   return (
     <ImageBackground
       source={require('../../assets/images/pexels-tamhasipkhan-11817009.jpg')}
@@ -105,7 +111,7 @@ const MenuTab = () => {
       <View style={styles.overlay}>
         <View style={styles.header}>
           <View>
-            <ThemedText style={styles.greeting}>Hello, Dawood</ThemedText>
+            <ThemedTextWithDefaults style={styles.greeting}>Hello, Dawood</ThemedTextWithDefaults>
             <ThemedText style={styles.subGreeting}>
               {weatherData ? `It's a ${weatherData.current.condition.text} day!` : 'Loading...'}
             </ThemedText>
