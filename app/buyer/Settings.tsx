@@ -18,7 +18,7 @@ const Settings = () => {
     {
       title: 'Check Transaction History',
       icon: 'schedule',
-      route: 'expert/ConsultationHours',
+      route: 'buyer/ConsultationHours',
       description: 'See your transaction history'
     },
     {

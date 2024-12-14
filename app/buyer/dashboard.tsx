@@ -1,64 +1,125 @@
 import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import AuctionSystemTab from './AuctionSystemTab';
 import AccountTab from './AccountTab';
 import CoinScreen from './CoinScreen';
 import CoinDisplay from '../../components/CoinDisplay';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
+const TabIcon = ({ name, color, size = 26 }: { name: string; color: string; size?: number }) => (
+  <View style={styles.iconContainer}>
+    <MaterialCommunityIcons name={name} size={size} color={color} />
+  </View>
+);
+
 const BuyerDashboard = () => {
   const { t } = useTranslation();
-  const [coins, setCoins] = useState(1000); // Example initial value
+  const [coins, setCoins] = useState(1000);
   const navigation = useNavigation();
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+        tabBarIcon: ({ focused, color }) => {
+          let iconName = '';
 
           if (route.name === t('auctionSystem')) {
             iconName = focused ? 'gavel' : 'gavel';
           } else if (route.name === t('account')) {
-            iconName = focused ? 'person' : 'person-outline';
+            iconName = focused ? 'account' : 'account-outline';
           }
 
-          return <Icon name={iconName as string} type={route.name === t('auctionSystem') ? 'font-awesome-5' : 'ionicon'} size={size} color={color} />;
+          return <TabIcon name={iconName} color={color} />;
         },
         tabBarActiveTintColor: '#FFC107',
-        tabBarInactiveTintColor: '#FFFFFF',
+        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.7)',
         tabBarStyle: {
           backgroundColor: '#61B15A',
+          height: 70,
+          borderTopWidth: 0,
+          elevation: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -4 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+          position: 'absolute',
+          bottom: 20,
+          left: 20,
+          right: 20,
+          borderRadius: 15,
+          paddingBottom: 8,
+          marginHorizontal: 20,
+
         },
-        headerShown: true,
+        tabBarItemStyle: {
+          marginTop: 10,
+          height: 50,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+          marginTop: 5,
+          marginBottom: 8,
+        },
         headerStyle: {
           backgroundColor: '#61B15A',
+          elevation: 0,
+          shadowOpacity: 0,
         },
         headerTintColor: '#FFFFFF',
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: '600',
+          fontSize: 20,
         },
         headerRight: () => (
-          <TouchableOpacity onPress={() => navigation.navigate('Coins' as never)}>
+          <TouchableOpacity
+            style={styles.coinButton}
+            onPress={() => navigation.navigate('buyer/CoinScreen' as never)}
+          >
             <CoinDisplay coins={coins} />
           </TouchableOpacity>
         ),
       })}
     >
-      <Tab.Screen name={t('auctionSystem')} component={AuctionSystemTab} />
-      <Tab.Screen name={t('account')} component={AccountTab} />
-      <Tab.Screen 
-        name="Coins" 
-        component={CoinScreen} 
-        options={{ tabBarButton: () => null }}
+      <Tab.Screen
+        name={t('auctionSystem')}
+        component={AuctionSystemTab}
+        options={{
+          tabBarLabel: t('Auction'),
+        }}
       />
+      <Tab.Screen
+        name={t('account')}
+        component={AccountTab}
+        options={{
+          tabBarLabel: t('Account'),
+        }}
+      />
+      
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  iconContainer: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  coinButton: {
+    marginRight: 15,
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+});
 
 export default BuyerDashboard;
