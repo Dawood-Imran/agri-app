@@ -6,6 +6,7 @@ import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Correct import for MaterialCommunityIcons
+import { Toast } from './components/Toast';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
@@ -18,29 +19,36 @@ const SignUp = () => {
   const [confirmPinCode, setConfirmPinCode] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { t, i18n } = useTranslation();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const isRTL = i18n.language === 'ur';
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setToastVisible(true);
+  };
 
   const validateForm = () => {
     setErrorMessage(''); // Reset error message
     if (!name.trim()) {
-      setErrorMessage(t('Name Required'));
+      showToast(t('Name Required'));
       return false;
     }
     if (!phoneNumber.trim()) {
-      setErrorMessage(t('Phone Number Required'));
+      showToast(t('Phone Number Required'));
       return false;
     }
     if (!/^(?:\d{10}|\d{11})$/.test(phoneNumber.trim())) {
-      setErrorMessage(t('Invalid Phone Number'));
+      showToast(t('Invalid Phone Number'));
       return false;
     }
     if (pinCode.length !== 4 || !/^\d+$/.test(pinCode.trim())) {
-      setErrorMessage(t('Pin Code Must Be 4 Digits'));
+      showToast(t('Pin Code Must Be 4 Digits'));
       return false;
     }
     if (pinCode !== confirmPinCode) {
-      setErrorMessage(t('Pins Must Match'));
+      showToast(t('Pins Must Match'));
       return false;
     }
     return true;
@@ -53,9 +61,9 @@ const SignUp = () => {
       setPhoneNumber(cleanedText);
       setErrorMessage('');
     } else if (cleanedText.length > 10) {
-      setErrorMessage(t('Phone number cannot exceed 10 digits'));
+      showToast(t('Phone number cannot exceed 10 digits'));
     } else if (!cleanedText.startsWith('3')) {
-      setErrorMessage(t('Phone number must start with 3'));
+      showToast(t('Phone number must start with 3'));
     }
   };
 
@@ -192,6 +200,12 @@ const SignUp = () => {
           {t('Already Have Account')} <ThemedText style={styles.signInHighlight}>{t('Sign In')}</ThemedText>
         </ThemedText>
       </TouchableOpacity>
+      <Toast 
+        visible={toastVisible}
+        message={toastMessage}
+        type="error"
+        onHide={() => setToastVisible(false)}
+      />
     </ThemedView>
   );
 };

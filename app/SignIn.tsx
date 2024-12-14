@@ -5,6 +5,7 @@ import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
+import { Toast } from './components/Toast';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
@@ -14,9 +15,16 @@ const SignIn = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [pinCode, setPinCode] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const { t, i18n } = useTranslation();
 
   const isRTL = i18n.language === 'ur';
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setToastVisible(true);
+  };
 
   const validatePhoneNumber = (text: string) => {
     const cleanedText = text.replace(/[\s-]/g, '');
@@ -25,15 +33,15 @@ const SignIn = () => {
       setPhoneNumber(cleanedText);
       setErrorMessage('');
     } else if (cleanedText.length > 10) {
-      setErrorMessage(t('Phone number cannot exceed 10 digits'));
+      showToast(t('Phone number cannot exceed 10 digits'));
     } else if (!cleanedText.startsWith('3')) {
-      setErrorMessage(t('Phone number must start with 3'));
+      showToast(t('Phone number must start with 3'));
     }
   };
 
   const handleSignIn = () => {
     if (!phoneNumber.trim() || !pinCode.trim()) {
-      Alert.alert(t('error'), t('All Fields Required'));
+      showToast(t('All Fields Required'));
       return;
     }
 
@@ -174,6 +182,12 @@ const SignIn = () => {
           {t("Don't Have Account")} <ThemedText style={styles.signUpHighlight}>{t('Create Account')}</ThemedText>
         </ThemedText>
       </TouchableOpacity>
+      <Toast 
+        visible={toastVisible}
+        message={toastMessage}
+        type="error"
+        onHide={() => setToastVisible(false)}
+      />
     </ThemedView>
     
   );

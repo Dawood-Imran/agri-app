@@ -5,15 +5,23 @@ import { Input, Button, Icon } from 'react-native-elements';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
+import { Toast } from './components/Toast';
 
 const VerifyPin = () => {
   const router = useRouter();
   const [pin, setPin] = useState('');
   const { t } = useTranslation();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setToastVisible(true);
+  };
 
   const handleSubmit = () => {
     if (!pin.trim() || pin.length !== 4) {
-      Alert.alert(t('error'), t('Please enter a valid PIN'));
+      showToast(t('Please enter a valid PIN'));
       return;
     }
     // Here you would typically verify the PIN
@@ -72,6 +80,13 @@ const VerifyPin = () => {
           titleStyle={styles.buttonTitle}
         />
       </View>
+
+      <Toast 
+        visible={toastVisible}
+        message={toastMessage}
+        type="error"
+        onHide={() => setToastVisible(false)}
+      />
     </ThemedView>
   );
 };
