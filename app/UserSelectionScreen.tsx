@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   languagePicker: {
     width: 150,
-    height: 50,
+    height: 53,
     color: '#FFC107',
     fontSize: 14,
   },
@@ -91,11 +91,12 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: 20,
     borderRadius: 15,
+    marginTop: 30,
     
   },
   welcomeText: {
-    marginTop: 10,
-    fontSize: 30,
+    
+    fontSize: 33,
     fontWeight: 'bold',
     color: '#FFFFFF',
     marginBottom: 10,
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   questionText: {
-    fontSize: 30,
+    fontSize: 33,
     color: '#FFEB3B',
     marginTop: 10,
     marginBottom: 30,
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 55,
   },
   buttonText: {
     color: '#FFFFFF',

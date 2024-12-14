@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 import { ThemedView } from '../components/ThemedView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+const { width } = Dimensions.get('window');
 
 const LanguageSelection = () => {
   const { t, i18n } = useTranslation();
@@ -18,33 +21,49 @@ const LanguageSelection = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <Image 
-        source={require('../assets/images/illustration-1.png')}
-        style={styles.illustration}
-        resizeMode="contain"
-      />
-      
-      <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleEnglish}>Select Language</ThemedText>
-        <ThemedText style={styles.titleUrdu}>زبان منتخب کریں</ThemedText>
+      <View style={styles.topSection}>
+        <Image 
+          source={require('../assets/images/illustration-1.png')}
+          style={styles.illustration}
+          resizeMode="contain"
+        />
       </View>
-      
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => changeLanguage('en')}
-        >
-          <ThemedText style={styles.buttonTextEnglish}>English</ThemedText>
-          
-        </TouchableOpacity>
+
+      <View style={styles.bottomSection}>
+        <View style={styles.titleContainer}>
+          <ThemedText style={styles.titleEnglish}>Select Language</ThemedText>
+          <ThemedText style={styles.titleUrdu}>زبان منتخب کریں</ThemedText>
+        </View>
         
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => changeLanguage('ur')}
-        >
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.languageButton}
+            onPress={() => changeLanguage('en')}
+          >
+            <View style={styles.buttonContent}>
+              <MaterialCommunityIcons name="web" size={24} color="#1B5E20" />
+              <View style={styles.buttonTextContainer}>
+                <ThemedText style={styles.buttonTextEnglish}>English</ThemedText>
+                
+              </View>
+              <MaterialCommunityIcons name="chevron-right" size={24} color="#1B5E20" />
+            </View>
+          </TouchableOpacity>
           
-          <ThemedText style={styles.buttonTextUrdu}>اردو</ThemedText>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.languageButton}
+            onPress={() => changeLanguage('ur')}
+          >
+            <View style={styles.buttonContent}>
+              <MaterialCommunityIcons name="web" size={24} color="#1B5E20" />
+              <View style={styles.buttonTextContainer}>
+                <ThemedText style={styles.buttonTextUrdu}>اردو</ThemedText>
+                
+              </View>
+              <MaterialCommunityIcons name="chevron-right" size={24} color="#1B5E20" />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </ThemedView>
   );
@@ -53,72 +72,91 @@ const LanguageSelection = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#61B15A',
   },
+  topSection: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 50,
+  },
+  bottomSection: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    padding: 30,
+    paddingTop: 40,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+  },
   illustration: {
-    width: '80%',
-    height: 200,
-    marginBottom: 30,
-    
+    width: width * 0.8,
+    height: width * 0.6,
+    marginBottom: 20,
   },
   titleContainer: {
-    alignItems: 'center',
-    marginBottom: 40,
-    height: 100,
+    marginBottom: 30,
   },
   titleEnglish: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 10,
-    marginTop: 10,
-    lineHeight: 30,
-
-  },
-  titleUrdu: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#FFFFFF',
-    textAlign: 'right',
-    writingDirection: 'rtl',
-    marginTop: 10,
+    color: '#333',
+    marginBottom: 8,
+    lineHeight: 40,
+  },
+  titleUrdu: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'left',
     lineHeight: 40,
   },
   buttonContainer: {
-    width: '80%',
-    maxWidth: 300,
+    gap: 15,
   },
-  button: {
-    backgroundColor: '#FFC107',
-    padding: 15,
-    marginVertical: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-    elevation: 3,
+  languageButton: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 15,
+    padding: 20,
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.1,
     shadowRadius: 3.84,
   },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  buttonTextContainer: {
+    flex: 1,
+    marginLeft: 15,
+  },
   buttonTextEnglish: {
-    color: '#1B5E20',
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#1B5E20',
     marginBottom: 4,
   },
   buttonTextUrdu: {
-    color: '#1B5E20',
     fontSize: 20,
-    marginBottom: 4,
     fontWeight: 'bold',
-    textAlign: 'right',
-    writingDirection: 'rtl',
-    
+    color: '#1B5E20',
+    marginBottom: 4,
+  },
+  buttonSubText: {
+    fontSize: 14,
+    color: '#666',
   },
 });
 
