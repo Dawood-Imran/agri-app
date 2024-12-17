@@ -3,12 +3,14 @@ import { StyleSheet, ScrollView  , Text, View} from 'react-native';
 import {  Card } from 'react-native-elements';
 
 import { useTranslation } from 'react-i18next';
+import CustomHeader from '../components/CustomHeader';
 
 const YieldPrediction = () => {
   const { t } = useTranslation();
 
   return (
     < View style={styles.container}>
+      <CustomHeader />
       <ScrollView>
         <Card containerStyle={styles.card}>
           <Text style={styles.title}>{t('yieldPrediction')}</Text>

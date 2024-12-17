@@ -13,13 +13,15 @@ import { useTranslation } from 'react-i18next';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { color } from 'react-native-elements/dist/helpers';
+import CustomHeader from '../app/components/CustomHeader';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -37,21 +39,8 @@ export default function RootLayout() {
     return null;
   }
 
-  const headerLeft = () => (
-    <TouchableOpacity 
-      style={styles.backButton} 
-      onPress={() => {
-        if (navigation.canGoBack()) {
-          navigation.goBack();
-        }
-      }}
-    >
-      <Icon name="arrow-back" type="material" color="#FFFFFF" size={30} />
-    </TouchableOpacity>
-  );
-
   const commonHeaderOptions = {
-    headerLeft,
+    
     headerStyle: { backgroundColor: '#61B15A' },
     headerTintColor: '#FFFFFF',
     headerTitleStyle: { fontWeight: 'bold' as const },
@@ -99,9 +88,4 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
-const styles = {
-  backButton: {
-    marginLeft: 10,
-  },
-};
 

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, ActivityIndicator, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import { Card, Text, Icon } from 'react-native-elements';
-import { ThemedView } from '../../components/ThemedView';
+import { ScrollView, StyleSheet, View, ActivityIndicator, TouchableOpacity, ImageBackground, Image , Text} from 'react-native';
+import { Card, Icon } from 'react-native-elements';
+
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
-import ThemedText from '@/components/ThemedText';
 
 const API_KEY = "33e96491c93c4bb88bc130136241209";  // Replace with your WeatherAPI key
 const BASE_URL = "http://api.weatherapi.com/v1/current.json";

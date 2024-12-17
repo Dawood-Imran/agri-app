@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity , Text } from 'react-native';
-import { ThemedView } from '../../components/ThemedView';
-import { ThemedText } from '../../components/ThemedText';
+
 import { Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';

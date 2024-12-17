@@ -1,17 +1,15 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-elements';
-import { ThemedView } from '../../components/ThemedView';
+import { StyleSheet, View , Text} from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 const AuctionSystem = () => {
   const { t } = useTranslation();
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <Text style={styles.title}>{t('auctionSystem')}</Text>
       <Text style={styles.content}>{t('auctionSystemContent')}</Text>
-    </ThemedView>
+    </  View>
   );
 };
 

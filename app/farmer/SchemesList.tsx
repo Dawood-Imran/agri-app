@@ -10,9 +10,8 @@ const backgroundImage = require('../../assets/images/farmer-icons/pexels-saeed-a
 const SchemesList = () => {
   const router = useRouter();
   const { t, i18n } = useTranslation();
-  const navigation = useNavigation();
   const { schemes, loading, error } = useSchemes();
-
+  
   const handleSchemePress = React.useCallback((schemeId: string) => {
     router.push({ 
       pathname: '/farmer/SchemeDetails' as any,
@@ -20,30 +19,7 @@ const SchemesList = () => {
     });
   }, [router]);
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Icon 
-          name="arrow-back" 
-          type="material" 
-          color="#FFC107" 
-          size={30} 
-          onPress={() => navigation.goBack()} 
-          containerStyle={{ marginLeft: 10 }}
-        />
-      ),
-      headerTitle: t('agricultureSchemes'),
-      headerStyle: {
-        backgroundColor: '#61B15A',
-      },
-      headerTitleStyle: {
-        color: '#FFFFFF',
-        fontSize: 20,
-        fontWeight: 'bold',
-      },
-      headerTintColor: '#FFFFFF',
-    });
-  }, [navigation, t]);
+  
 
   if (loading) {
     return (

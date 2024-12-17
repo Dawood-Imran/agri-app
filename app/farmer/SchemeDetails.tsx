@@ -18,30 +18,7 @@ const SchemeDetails = () => {
   
   const scheme = schemes.find(s => s.id === schemeId);
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Icon 
-          name="arrow-back" 
-          type="material" 
-          color="#FFC107" 
-          size={30} 
-          onPress={() => navigation.goBack()} 
-          containerStyle={{ marginLeft: 10 }}
-        />
-      ),
-      headerTitle: t('schemeDetails'),
-      headerStyle: {
-        backgroundColor: '#61B15A',
-      },
-      headerTitleStyle: {
-        color: '#FFFFFF',
-        fontSize: 20,
-        fontWeight: 'bold',
-      },
-      headerTintColor: '#FFFFFF',
-    });
-  }, [navigation, t]);
+ 
 
   if (loading) {
     return (
