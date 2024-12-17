@@ -19,6 +19,7 @@ const SignUp = () => {
   const { t, i18n } = useTranslation();
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
 
   const isRTL = i18n.language === 'ur';
 
@@ -65,26 +66,31 @@ const SignUp = () => {
     }
   };
 
-  const handleSignUp = () => {
-    if (validateForm()) {
-      Alert.alert(
-        t('Confirm'),
-        t('Are you sure you want to create an account with phone number +92') + phoneNumber + '?',
-        [
-          {
-            text: t('Cancel'),
-            style: 'cancel'
-          },
-          {
-            text: t('Yes'),
-            onPress: () => {
-              alert(t('Account Created Successfully'));
-              router.replace({ pathname: '/SignIn', params: { userType } });
+  const handleSignUp = async () => {
+    setLoading(true); // Start loading
+    // Simulate an API call
+    setTimeout(() => {
+      setLoading(false); // Stop loading
+      if (validateForm()) {
+        Alert.alert(
+          t('Confirm'),
+          t('Are you sure you want to create an account with phone number +92') + phoneNumber + '?',
+          [
+            {
+              text: t('Cancel'),
+              style: 'cancel'
+            },
+            {
+              text: t('Yes'),
+              onPress: () => {
+                alert(t('Account Created Successfully'));
+                router.replace({ pathname: '/SignIn', params: { userType } });
+              }
             }
-          }
-        ]
-      );
-    }
+          ]
+        );
+      }
+    }, 2000);
   };
 
   const handleBack = () => {
@@ -192,6 +198,7 @@ const SignUp = () => {
         <Button
           title={t('Create Account')}
           onPress={handleSignUp}
+          loading={loading} // Show loader
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
@@ -221,7 +228,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#61B15A',
   },
   titleContainer: {
-    marginBottom: 20,
+    
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingTop: 30,
@@ -230,7 +237,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: '#FFFFFF',
     fontWeight: 'bold',
-    marginBottom: 10,
+    
     lineHeight: 42,
   },
   titleSub: {
@@ -259,7 +266,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 15,
     
-    height: 50,
+    height: 45,
     width: '100%',
   },
   inputText: {
@@ -343,6 +350,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     marginBottom: 5,
+    marginLeft:5
   },
 });
 

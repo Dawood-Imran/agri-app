@@ -12,6 +12,7 @@ const SignIn = () => {
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [pinCode, setPinCode] = useState('');
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -37,36 +38,38 @@ const SignIn = () => {
     }
   };
 
-  const handleSignIn = () => {
-    if (!phoneNumber.trim() || !pinCode.trim()) {
-      showToast(t('All Fields Required'));
-      return;
-    }
-
-    // Here you would typically handle authentication
-    if (userType) {
-      switch(userType.toLowerCase()) {
-        case 'farmer':
-          router.replace('/farmer/dashboard');
-          break;
-        case 'expert':
-          router.replace('/expert/dashboard');
-          break;
-        case 'buyer':
-          router.replace('/buyer/dashboard');
-          break;
-        default:
-          Alert.alert(t('error'), 'Invalid user type');
-          router.replace('/UserSelectionScreen');
+  const handleSignIn = async () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      if (!phoneNumber.trim() || !pinCode.trim()) {
+        showToast(t('All Fields Required'));
+        return;
       }
-    } else {
-      // Handle case when userType is not available
-      Alert.alert(t('error'), 'Please select user type');
-      router.replace('/UserSelectionScreen');
-    }
+
+      // Here you would typically handle authentication
+      if (userType) {
+        switch(userType.toLowerCase()) {
+          case 'farmer':
+            router.replace('/farmer/dashboard');
+            break;
+          case 'expert':
+            router.replace('/expert/dashboard');
+            break;
+          case 'buyer':
+            router.replace('/buyer/dashboard');
+            break;
+          default:
+            Alert.alert(t('error'), 'Invalid user type');
+            router.replace('/UserSelectionScreen');
+        }
+      } else {
+        // Handle case when userType is not available
+        Alert.alert(t('error'), 'Please select user type');
+        router.replace('/UserSelectionScreen');
+      }
+    }, 2000);
   };
-
-
 
   const validateForm = () => {
     setErrorMessage(''); // Reset error message
@@ -84,8 +87,6 @@ const SignIn = () => {
     }
     return true;
   };
-
-  
 
   const handleBack = () => {
     router.push('/UserSelectionScreen');
@@ -170,8 +171,9 @@ const SignIn = () => {
           </TouchableOpacity>
         </View>
         <Button
-          title={t('Sign In')} // Ensure this is translated
+          title={t('Sign In')}
           onPress={handleSignIn}
+          loading={loading}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#61B15A',
   },
   titleContainer: {
-    marginBottom: 40,
+    marginBottom: 20,
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingTop: 30,
@@ -212,13 +214,12 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: '#FFFFFF',
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
     lineHeight: 42,
   },
   titleSub: {
     fontSize: 28,
     color: '#FFFFFF',
-    marginTop: 5,
     paddingVertical: 10,
   },
   userType: {
@@ -240,6 +241,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'relative',
+    
     marginBottom: 15,
     width: '100%',
   },
@@ -254,11 +256,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 15,
     marginBottom: 10,
-    height: 50,
+    height: 45,
     width: '100%',
   },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: 10,
     width: '80%',
     left: '10%',
   },
@@ -341,6 +343,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     marginBottom: 5,
+    marginLeft:5
+
   },
   labelRTL: {
     textAlign: 'right', // Align text to the right for Urdu

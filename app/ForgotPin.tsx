@@ -3,12 +3,17 @@ import { StyleSheet, TouchableOpacity, View, Image, Alert , Text} from 'react-na
 import { useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
+import { Toast } from './components/Toast';
 
 const ForgotPin = () => {
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { t } = useTranslation();
+
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
 
   const validatePhoneNumber = (text: string) => {
     const cleanedText = text.replace(/[\s-]/g, '');
@@ -17,15 +22,22 @@ const ForgotPin = () => {
       setPhoneNumber(cleanedText);
       setErrorMessage('');
     } else if (cleanedText.length > 10) {
-      setErrorMessage(t('Phone number cannot exceed 10 digits'));
+      
+      setToastVisible(true);
+      setToastMessage(t('Phone number cannot exceed 10 digits'));
+
     } else if (!cleanedText.startsWith('3')) {
-      setErrorMessage(t('Phone number must start with 3'));
+      
+      setToastVisible(true);
+      setToastMessage(t('Phone number must start with 3'));
     }
   };
 
   const handleSubmit = () => {
     if (!phoneNumber.trim() || phoneNumber.length !== 10) {
-      setErrorMessage(t('Please enter a valid phone number'));
+
+      setToastVisible(true);
+      setToastMessage(t('Please enter a valid phone number'));
       return;
     }
 
