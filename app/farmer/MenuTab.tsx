@@ -96,11 +96,7 @@ const MenuTab = () => {
     }
   ];
 
-  const ThemedTextWithDefaults = ({ style, children, ...props }) => (
-    <ThemedText style={style} {...props}>
-      {children}
-    </ThemedText>
-  );
+  
 
   return (
     <ImageBackground
@@ -109,28 +105,18 @@ const MenuTab = () => {
       resizeMode="cover"
     >
       <View style={styles.overlay}>
-        <View style={styles.header}>
-          <View>
-            <ThemedTextWithDefaults style={styles.greeting}>Hello, Dawood</ThemedTextWithDefaults>
-            <ThemedText style={styles.subGreeting}>
-              {weatherData ? `It's a ${weatherData.current.condition.text} day!` : 'Loading...'}
-            </ThemedText>
-          </View>
-          <View style={styles.locationContainer}>
-            <Image 
-              source={require('../../assets/images/farmer-icons/weather-icons/map.png')}
-              style={styles.locationIcon}
-            />
-            <ThemedText style={styles.locationText}>
-              {weatherData?.location.name || 'Loading...'}
-            </ThemedText>
-          </View>
-        </View>
-
         <ScrollView 
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
         >
+          <View style={styles.header}>
+            <Text style={styles.greeting}>Hello, Dawood</Text>
+            <Text style={styles.subGreeting}>
+              {weatherData ? `It's a ${weatherData.current.condition.text} day!` : 'Loading...'}
+            </Text>
+          </View>
+
           <View style={styles.weatherContainer}>
             <View style={styles.weatherRow}>
               <View style={styles.weatherItem}>
@@ -138,10 +124,10 @@ const MenuTab = () => {
                   source={require('../../assets/images/farmer-icons/weather-icons/hot.png')}
                   style={styles.weatherIcon}
                 />
-                <ThemedText style={styles.weatherValue}>
+                <Text style={styles.weatherValue}>
                   {weatherData ? `${weatherData.current.temp_c}°C` : '--'}
-                </ThemedText>
-                <ThemedText style={styles.weatherLabel}>{t('temperature')}</ThemedText>
+                </Text>
+                <Text style={styles.weatherLabel}>{t('temperature')}</Text>
               </View>
 
               <View style={styles.weatherItem}>
@@ -149,10 +135,10 @@ const MenuTab = () => {
                   source={require('../../assets/images/farmer-icons/weather-icons/humidity.png')}
                   style={styles.weatherIcon}
                 />
-                <ThemedText style={styles.weatherValue}>
+                <Text style={styles.weatherValue}>
                   {weatherData ? `${weatherData.current.humidity}%` : '--'}
-                </ThemedText>
-                <ThemedText style={styles.weatherLabel}>{t('humidity')}</ThemedText>
+                </Text>
+                <Text style={styles.weatherLabel}>{t('humidity')}</Text>
               </View>
             </View>
 
@@ -162,10 +148,10 @@ const MenuTab = () => {
                   source={require('../../assets/images/farmer-icons/weather-icons/atmospheric-conditions.png')}
                   style={styles.weatherIcon}
                 />
-                <ThemedText style={[styles.weatherValue, { fontSize: 16 }]}>
+                <Text style={[styles.weatherValue, { fontSize: 16 }]}>
                   {weatherData ? weatherData.current.condition.text : '--'}
-                </ThemedText>
-                <ThemedText style={styles.weatherLabel}>{t('condition')}</ThemedText>
+                </Text>
+                <Text style={styles.weatherLabel}>{t('condition')}</Text>
               </View>
 
               <View style={styles.weatherItem}>
@@ -173,10 +159,10 @@ const MenuTab = () => {
                   source={require('../../assets/images/farmer-icons/weather-icons/wind.png')}
                   style={styles.weatherIcon}
                 />
-                <ThemedText style={styles.weatherValue}>
+                <Text style={styles.weatherValue}>
                   {weatherData ? `${weatherData.current.wind_kph} km/h` : '--'}
-                </ThemedText>
-                <ThemedText style={styles.weatherLabel}>{t('windspeed')}</ThemedText>
+                </Text>
+                <Text style={styles.weatherLabel}>{t('windspeed')}</Text>
               </View>
             </View>
           </View>
@@ -213,15 +199,10 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 20,
+    paddingBottom: 70,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    paddingHorizontal: 20,
-    paddingTop: 40,
-    paddingBottom: 20,
+    padding: 20,
   },
   greeting: {
     fontSize: 24,
@@ -233,30 +214,13 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     opacity: 0.8,
   },
-  locationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    padding: 10,
-    borderRadius: 20,
-  },
-  locationIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-    
-  },
-  locationText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-  },
   weatherContainer: {
     padding: 20,
   },
   weatherRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   weatherItem: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
@@ -284,6 +248,7 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     paddingHorizontal: 15,
+    marginVertical: 10,
   },
   featureCard: {
     borderRadius: 10,
@@ -314,23 +279,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
-  },
-  coinContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    padding: 8,
-    borderRadius: 20,
-  },
-  coinIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-  },
-  coinText: {
-    color: '#FFC107',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });
 

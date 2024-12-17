@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
-import { ThemedView } from '../../components/ThemedView';
-import { ThemedText } from '../../components/ThemedText';
+import { StyleSheet, View, TouchableOpacity, TextInput, ScrollView, Alert , Text} from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 
 const Help = () => {
@@ -44,7 +42,7 @@ const Help = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.formCard}>
           <View style={styles.headerContainer}>
@@ -55,13 +53,13 @@ const Help = () => {
               size={30}
               style={styles.headerIcon}
             />
-            <ThemedText style={styles.headerText}>
+            <  Text style={styles.headerText}>
               Need Help? Contact Us
-            </ThemedText>
+            </  Text>
           </View>
           
           <View style={styles.formGroup}>
-            <ThemedText style={styles.label}>Name</ThemedText>
+            <  Text style={styles.label}>Name</  Text>
             <TextInput
               style={styles.input}
               value={name}
@@ -72,7 +70,7 @@ const Help = () => {
           </View>
 
           <View style={styles.formGroup}>
-            <ThemedText style={styles.label}>Email</ThemedText>
+            <  Text style={styles.label}>Email</  Text>
             <TextInput
               style={styles.input}
               value={email}
@@ -85,7 +83,7 @@ const Help = () => {
           </View>
 
           <View style={styles.formGroup}>
-            <ThemedText style={styles.label}>Subject</ThemedText>
+            <  Text style={styles.label}>Subject</  Text>
             <TextInput
               style={styles.input}
               value={subject}
@@ -96,7 +94,7 @@ const Help = () => {
           </View>
 
           <View style={styles.formGroup}>
-            <ThemedText style={styles.label}>Message</ThemedText>
+            <  Text style={styles.label}>Message</  Text>
             <TextInput
               style={[styles.input, styles.messageInput]}
               value={message}
@@ -117,7 +115,7 @@ const Help = () => {
           />
         </View>
       </ScrollView>
-    </ThemedView>
+    </  View>
   );
 };
 

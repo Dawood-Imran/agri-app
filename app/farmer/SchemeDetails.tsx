@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Dimensions, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, View, Dimensions, Image, ActivityIndicator , Text } from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { ThemedText } from '../../components/ThemedText';
-import { ThemedView } from '../../components/ThemedView';
+
 import { Card, Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 import { useSchemes } from '../hooks/useSchemes';
@@ -46,24 +45,24 @@ const SchemeDetails = () => {
 
   if (loading) {
     return (
-      <ThemedView style={styles.loadingContainer}>
+      < View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#61B15A" />
-      </ThemedView>
+      </ View>
     );
   }
 
   if (error || !scheme) {
     return (
-      <ThemedView style={styles.errorContainer}>
-        <ThemedText style={styles.errorText}>
+      < View style={styles.errorContainer}>
+        < Text style={styles.errorText}>
           {error || 'Scheme not found'}
-        </ThemedText>
-      </ThemedView>
+        </ Text>
+      </ View>
     );
   }
 
   return (
-    <ThemedView style={styles.container}>
+    < View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {scheme.Title === "ٹرکٹر اسکیم" && (
           <Card containerStyle={styles.imageCard}>
@@ -71,31 +70,31 @@ const SchemeDetails = () => {
           </Card>
         )}
 
-        <ThemedText style={styles.schemeTitle}>
+        < Text style={styles.schemeTitle}>
           {scheme.Title}
-        </ThemedText>
-        <ThemedText style={styles.bodyText}>
+        </ Text>
+        < Text style={styles.bodyText}>
           {scheme.Description}
-        </ThemedText>
+        </ Text>
 
         <Card containerStyle={styles.conditionCard}>
           <Card.Title>
-            <ThemedText style={styles.conditionTitle}>شرائط و ضوابط</ThemedText>
+            < Text style={styles.conditionTitle}>شرائط و ضوابط</ Text>
           </Card.Title>
           <Card.Divider />
           <View>
             {scheme.TableData && scheme.TableData.length > 0 && scheme.TableData.map((item, index) => (
               <View key={index} style={styles.conditionItem}>
                 <View style={styles.conditionTextContainer}>
-                  <ThemedText style={styles.conditionText}>{item.Condition}</ThemedText>
-                  <ThemedText style={styles.conditionDescription}>{item.Description}</ThemedText>
+                  < Text style={styles.conditionText}>{item.Condition}</ Text>
+                  < Text style={styles.conditionDescription}>{item.Description}</ Text>
                 </View>
               </View>
             ))}
           </View>
         </Card>
       </ScrollView>
-    </ThemedView>
+    </ View>
   );
 };
 

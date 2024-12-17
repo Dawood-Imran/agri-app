@@ -1,21 +1,21 @@
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
-import { Text, Card } from 'react-native-elements';
-import { ThemedView } from '../../components/ThemedView';
+import { StyleSheet, ScrollView  , Text, View} from 'react-native';
+import {  Card } from 'react-native-elements';
+
 import { useTranslation } from 'react-i18next';
 
 const YieldPrediction = () => {
   const { t } = useTranslation();
 
   return (
-    <ThemedView style={styles.container}>
+    < View style={styles.container}>
       <ScrollView>
         <Card containerStyle={styles.card}>
           <Text style={styles.title}>{t('yieldPrediction')}</Text>
           <Text style={styles.content}>{t('yieldPredictionContent')}</Text>
         </Card>
       </ScrollView>
-    </ThemedView>
+    </ View>
   );
 };
 

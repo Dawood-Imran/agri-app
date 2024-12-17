@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, View, ImageBackground, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, View, ImageBackground, ActivityIndicator , Text} from 'react-native';
 import { useRouter, useNavigation } from 'expo-router';
-import { ThemedText } from '../../components/ThemedText';
-import { ThemedView } from '../../components/ThemedView';
 import { Card, Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 import { useSchemes } from '../hooks/useSchemes';
@@ -49,17 +47,17 @@ const SchemesList = () => {
 
   if (loading) {
     return (
-      <ThemedView style={styles.loadingContainer}>
+      <  View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#61B15A" />
-      </ThemedView>
+      </  View>
     );
   }
 
   if (error) {
     return (
-      <ThemedView style={styles.errorContainer}>
-        <ThemedText style={styles.errorText}>{error}</ThemedText>
-      </ThemedView>
+      <  View style={styles.errorContainer}>
+        <  Text style={styles.errorText}>{error}</  Text>
+      </  View>
     );
   }
 
@@ -69,15 +67,15 @@ const SchemesList = () => {
       style={styles.backgroundImage}
       resizeMode="cover"
     >
-      <ThemedView style={styles.overlay}>
+      <  View style={styles.overlay}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.textContainer}>
-            <ThemedText style={styles.titleText}>
+            <  Text style={styles.titleText}>
               کل کے لیے سرمایہ کاری
-            </ThemedText>
-            <ThemedText style={styles.bodyText}>
+            </  Text>
+            <  Text style={styles.bodyText}>
               کاشتکاروں اور زرعی صنعت کاروں کی ضروریا�� کو پورا کرنے کے لیے زرعی ترقیاتی بینک لیڈ چھوٹے کسانوں کے ان کے مالی ضروریات پورا کرنے اور اپنے کنبوں کے لیے بہتر زندگی گزارنے کے لیے مالی تحفظ کے مسائل اور رہن کی بنیاد پر جدید زرعی سپلائی اور سروسز کی شناخت کرنے میں مدد کرنے کے لیے جدید اقدامات کرنے کی کوشش کرتا ہے۔
-            </ThemedText>
+            </  Text>
           </View>
 
           {schemes.map((scheme) => (
@@ -87,9 +85,9 @@ const SchemesList = () => {
             >
               <Card containerStyle={styles.card}>
                 <View style={styles.cardContent}>
-                  <ThemedText style={styles.schemeTitle} numberOfLines={2}>
+                  <  Text style={styles.schemeTitle} numberOfLines={2}>
                     {scheme.Title}
-                  </ThemedText>
+                  </  Text>
                   <Icon
                     name="chevron-right"
                     type="material"
@@ -105,7 +103,7 @@ const SchemesList = () => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </ThemedView>
+      </  View>
     </ImageBackground>
   );
 };

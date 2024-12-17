@@ -1,8 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View , Text} from 'react-native';
 import { Button, ListItem, Icon } from 'react-native-elements';
-import { ThemedText } from '../../components/ThemedText';
-import { ThemedView } from '../../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
@@ -31,15 +29,15 @@ const CoinScreen = () => {
   }, [navigation]);
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.balanceCard}>
-          <ThemedText style={styles.balanceTitle}>
+          <  Text style={styles.balanceTitle}>
             {i18n.language === 'ur' ? 'موجودہ بیلنس' : t('Current Balance')}
-          </ThemedText>
-          <ThemedText style={styles.balance}>
+          </  Text>
+          <  Text style={styles.balance}>
             {balance} {i18n.language === 'ur' ? 'ایگرو کوائنز' : t('agroCoins')}
-          </ThemedText>
+          </  Text>
         </View>
         <Button
           title={i18n.language === 'ur' ? 'کوائنز خریدیں' : t('buyCoins')}
@@ -49,9 +47,9 @@ const CoinScreen = () => {
           containerStyle={styles.buttonContainer}
         />
         <View style={styles.card}>
-          <ThemedText style={styles.sectionTitle}>
+          <  Text style={styles.sectionTitle}>
             {i18n.language === 'ur' ? 'لین دین کی تاریخ' : t('TransactionHistory')}
-          </ThemedText>
+          </  Text>
           {transactions.map((item, i) => (
             <ListItem key={i} bottomDivider>
               <ListItem.Content>
@@ -62,14 +60,14 @@ const CoinScreen = () => {
                 </ListItem.Title>
                 <ListItem.Subtitle>{item.date}</ListItem.Subtitle>
               </ListItem.Content>
-              <ThemedText style={item.type === 'Spent' ? styles.spent : styles.bought}>
+              <  Text style={item.type === 'Spent' ? styles.spent : styles.bought}>
                 {item.type === 'Spent' ? '-' : '+'}{item.amount}
-              </ThemedText>
+              </  Text>
             </ListItem>
           ))}
         </View>
       </ScrollView>
-    </ThemedView>
+    </  View>
   );
 };
 

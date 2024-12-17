@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { ThemedView } from '../../components/ThemedView';
-import { ThemedText } from '../../components/ThemedText';
+import { StyleSheet, View, TouchableOpacity , Text} from 'react-native';
+
 import { Icon } from 'react-native-elements';
 import { useRouter } from 'expo-router';
 
@@ -34,7 +33,7 @@ const Settings = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <View style={styles.settingsCard}>
         {settingsItems.map((item, index) => (
           <TouchableOpacity 
@@ -55,12 +54,12 @@ const Settings = () => {
                 />
               </View>
               <View style={styles.textContainer}>
-                <ThemedText style={styles.settingTitle}>
+                <  Text style={styles.settingTitle}>
                   {item.title}
-                </ThemedText>
-                <ThemedText style={styles.settingDescription}>
+                </  Text>
+                <  Text style={styles.settingDescription}>
                   {item.description}
-                </ThemedText>
+                </  Text>
               </View>
             </View>
             <Icon
@@ -72,7 +71,7 @@ const Settings = () => {
           </TouchableOpacity>
         ))}
       </View>
-    </ThemedView>
+    </  View>
   );
 };
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ThemedText } from '../../components/ThemedText';
+import { Text } from 'react-native-elements';
 
 const MessagesTab = () => {
   return (
     <View style={styles.container}>
-      <ThemedText>Messages will appear here</ThemedText>
+      <Text>Messages will appear here</Text>
     </View>
   );
 };

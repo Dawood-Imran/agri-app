@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
-import { ThemedView } from '../../components/ThemedView';
-import { ThemedText } from '../../components/ThemedText';
+import { StyleSheet, View, Image , Text} from 'react-native';
+
 
 const Profile = () => {
   const expertDetails = {
@@ -16,45 +15,45 @@ const Profile = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <View style={styles.profileSection}>
         <View style={styles.imageContainer}>
          
-          <ThemedText style={styles.name}>Dr. {expertDetails.name}</ThemedText>
-          <ThemedText style={styles.specialization}>{expertDetails.specialization}</ThemedText>
+          <  Text style={styles.name}>Dr. {expertDetails.name}</  Text>
+          <  Text style={styles.specialization}>{expertDetails.specialization}</  Text>
         </View>
       </View>
 
       <View style={styles.detailsCard}>
         <View style={styles.statsContainer}>
           <View style={styles.statItem}>
-            <ThemedText style={styles.statValue}>{expertDetails.rating}</ThemedText>
-            <ThemedText style={styles.statLabel}>Rating</ThemedText>
+            <  Text style={styles.statValue}>{expertDetails.rating}</  Text>
+            <  Text style={styles.statLabel}>Rating</  Text>
           </View>
           <View style={styles.statItem}>
-            <ThemedText style={styles.statValue}>{expertDetails.consultations}</ThemedText>
-            <ThemedText style={styles.statLabel}>Consultations</ThemedText>
+            <  Text style={styles.statValue}>{expertDetails.consultations}</  Text>
+            <  Text style={styles.statLabel}>Consultations</  Text>
           </View>
           <View style={styles.statItem}>
-            <ThemedText style={styles.statValue}>{expertDetails.experience}</ThemedText>
-            <ThemedText style={styles.statLabel}>Experience</ThemedText>
+            <  Text style={styles.statValue}>{expertDetails.experience}</  Text>
+            <  Text style={styles.statLabel}>Experience</  Text>
           </View>
         </View>
 
         <View style={styles.detailRow}>
-          <ThemedText style={styles.label}>Education</ThemedText>
-          <ThemedText style={styles.value}>{expertDetails.education}</ThemedText>
+          <  Text style={styles.label}>Education</  Text>
+          <  Text style={styles.value}>{expertDetails.education}</  Text>
         </View>
         <View style={styles.detailRow}>
-          <ThemedText style={styles.label}>Phone</ThemedText>
-          <ThemedText style={styles.value}>{expertDetails.phone}</ThemedText>
+          <  Text style={styles.label}>Phone</  Text>
+          <  Text style={styles.value}>{expertDetails.phone}</  Text>
         </View>
         <View style={styles.detailRow}>
-          <ThemedText style={styles.label}>Email</ThemedText>
-          <ThemedText style={styles.value}>{expertDetails.email}</ThemedText>
+          <  Text style={styles.label}>Email</  Text>
+          <  Text style={styles.value}>{expertDetails.email}</  Text>
         </View>
       </View>
-    </ThemedView>
+    </  View>
   );
 };
 

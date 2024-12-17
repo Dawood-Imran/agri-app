@@ -1,8 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View , Text} from 'react-native';
 import { Button, ListItem, Icon } from 'react-native-elements';
-import { ThemedText } from '../../components/ThemedText';
-import { ThemedView } from '../../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
@@ -31,33 +29,33 @@ const CoinScreen = () => {
   }, [navigation]);
 
   return (
-    <ThemedView style={styles.container}>
+    < View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.balanceCard}>
-          <ThemedText style={styles.balanceTitle}>
+          < Text style={styles.balanceTitle}>
             {i18n.language === 'ur' ? 'کمائے گئے کوائنز کا بیلنس' : t('Earned Coins Balance')}
-          </ThemedText>
-          <ThemedText style={styles.balance}>
+          </ Text>
+          < Text style={styles.balance}>
             {balance} {i18n.language === 'ur' ? 'ایگرو کوائنز' : t('agroCoins')}
-          </ThemedText>
+          </ Text>
         </View>
         
         <View style={styles.card}>
-          <ThemedText style={styles.sectionTitle}>
+          < Text style={styles.sectionTitle}>
             {i18n.language === 'ur' ? 'مشاورت کی تاریخ' : t('Consultation History')}
-          </ThemedText>
+          </ Text>
           {consultations.map((item, i) => (
             <ListItem key={i} bottomDivider>
               <ListItem.Content>
                 <ListItem.Title>{item.farmer}</ListItem.Title>
                 <ListItem.Subtitle>{item.date} - {item.duration}</ListItem.Subtitle>
               </ListItem.Content>
-              <ThemedText style={styles.earned}>+{item.coins}</ThemedText>
+              < Text style={styles.earned}>+{item.coins}</ Text>
             </ListItem>
           ))}
         </View>
       </ScrollView>
-    </ThemedView>
+    </ View>
   );
 };
 

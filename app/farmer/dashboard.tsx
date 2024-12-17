@@ -49,11 +49,12 @@ const FarmerDashboard = () => {
           shadowOpacity: 0.1,
           shadowRadius: 8,
           position: 'absolute',
-          bottom: 20,
+          bottom: 5,
           left: 20,
           right: 20,
           borderRadius: 15,
           marginHorizontal: 20,
+          marginVertical: 10,
           
         },
         tabBarItemStyle: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity , Text } from 'react-native';
 import { ThemedView } from '../../components/ThemedView';
 import { ThemedText } from '../../components/ThemedText';
 import { Icon } from 'react-native-elements';
@@ -36,13 +36,13 @@ const AccountTab = () => {
   ];
 
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity 
         style={styles.logoutButton}
         onPress={handleLogout}
       >
         <Icon name="logout" type="material" color="#FF4444" size={24} />
-        <ThemedText style={styles.logoutText}>{t('Logout')}</ThemedText>
+        <Text style={styles.logoutText}>{t('Logout')}</Text>
       </TouchableOpacity>
 
       <View style={styles.menuContainer}>
@@ -60,7 +60,7 @@ const AccountTab = () => {
                 size={28}
               />
             </View>
-            <ThemedText style={styles.menuText}>{item.title}</ThemedText>
+            <Text style={styles.menuText}>{item.title}</Text>
             <Icon 
               name="chevron-right" 
               type="material" 
@@ -71,7 +71,7 @@ const AccountTab = () => {
           </TouchableOpacity>
         ))}
       </View>
-    </ThemedView>
+    </View>
   );
 };
 

@@ -1,17 +1,16 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { ThemedView } from '../../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 
 const BuyCoins = () => {
   const { t } = useTranslation();
 
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>{t('buyCoins')}</Text>
       <Text style={styles.content}>{t('buyCoinsContent')}</Text>
-    </ThemedView>
+    </View>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View , Image} from 'react-native';
-import { ThemedView } from '../../components/ThemedView';
-import { ThemedText } from '../../components/ThemedText';
+import { StyleSheet, View , Image , Text} from 'react-native';
+
 
 const Profile = () => {
   const farmerDetails = {
@@ -12,35 +11,35 @@ const Profile = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    < View style={styles.container}>
         <View style={styles.profileSection}>
         <View style={styles.imageContainer}>
           <Image 
             source={require('../../assets/images/farmer-icons/farmer.png')}
             style={styles.profileImage}
           />
-          <ThemedText style={styles.name}>Hi! Dawood Imran</ThemedText>
+          < Text style={styles.name}>Hi! Dawood Imran</ Text>
         </View>
       </View>
       <View style={styles.detailsCard}>
         <View style={styles.detailRow}>
-          <ThemedText style={styles.label}>Name</ThemedText>
-          <ThemedText style={styles.value}>{farmerDetails.name}</ThemedText>
+          < Text style={styles.label}>Name</ Text>
+          < Text style={styles.value}>{farmerDetails.name}</ Text>
         </View>
         <View style={styles.detailRow}>
-          <ThemedText style={styles.label}>Phone</ThemedText>
-          <ThemedText style={styles.value}>{farmerDetails.phone}</ThemedText>
+          < Text style={styles.label}>Phone</ Text>
+          < Text style={styles.value}>{farmerDetails.phone}</ Text>
         </View>
         <View style={styles.detailRow}>
-          <ThemedText style={styles.label}>City</ThemedText>
-          <ThemedText style={styles.value}>{farmerDetails.city}</ThemedText>
+          < Text style={styles.label}>City</ Text>
+          < Text style={styles.value}>{farmerDetails.city}</ Text>
         </View>
         <View style={styles.detailRow}>
-          <ThemedText style={styles.label}>Address</ThemedText>
-          <ThemedText style={styles.value}>{farmerDetails.address}</ThemedText>
+          < Text style={styles.label}>Address</ Text>
+          < Text style={styles.value}>{farmerDetails.address}</ Text>
         </View>
       </View>
-    </ThemedView>
+    </ View>
   );
 };
 

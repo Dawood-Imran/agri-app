@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
-import { ThemedText } from './ThemedText';
+import { Animated, StyleSheet, View , Text} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface ToastProps {
@@ -80,7 +79,7 @@ export const Toast: React.FC<ToastProps> = ({
         size={24} 
         color="#FFFFFF" 
       />
-      <ThemedText style={styles.message}>{message}</ThemedText>
+      <  Text style={styles.message}>{message}</  Text>
     </Animated.View>
   );
 };

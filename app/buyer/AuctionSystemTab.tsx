@@ -1,14 +1,13 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Card, Text } from 'react-native-elements';
-import { ThemedView } from '../../components/ThemedView';
 
 const AuctionSystemTab = () => {
   // This is a placeholder. In the future, this will be populated with actual auction items.
   const auctionItems = [];
 
   return (
-    <ThemedView style={styles.container}>
+      <View  style={styles.container}>
       <ScrollView>
         {auctionItems.length > 0 ? (
           auctionItems.map((item, index) => (
@@ -20,7 +19,7 @@ const AuctionSystemTab = () => {
           <Text style={styles.noItemsText}>No auction items available at the moment.</Text>
         )}
       </ScrollView>
-    </ThemedView>
+    </View>
   );
 };
 
