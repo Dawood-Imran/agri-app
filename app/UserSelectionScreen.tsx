@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Image , Text} from 'react-native';
 import { useRouter } from 'expo-router';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 
@@ -19,7 +17,7 @@ const UserSelectionScreen = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <View style={styles.languagePickerContainer}>
         <Picker
           selectedValue={i18n.language}
@@ -36,8 +34,8 @@ const UserSelectionScreen = () => {
         style={styles.logo}
         resizeMode="contain"
       />
-      <ThemedText style={styles.welcomeText}>{t('welcome')}</ThemedText>
-      <ThemedText style={styles.questionText}>{t('andYouAre')}</ThemedText>
+      <  Text style={styles.welcomeText}>{t('welcome')}</  Text>
+      <  Text style={styles.questionText}>{t('andYouAre')}</  Text>
       <View style={styles.buttonContainer}>
         {[
           { type: 'Farmer', icon: require('../assets/images/farmer.png') },
@@ -54,11 +52,11 @@ const UserSelectionScreen = () => {
               style={styles.icon}
               resizeMode="contain"
             />
-            <ThemedText style={styles.buttonText}>{t(user.type.toLowerCase())}</ThemedText>
+            <  Text style={styles.buttonText}>{t(user.type.toLowerCase())}</  Text>
           </TouchableOpacity>
         ))}
       </View>
-    </ThemedView>
+    </  View>
   );
 };
 

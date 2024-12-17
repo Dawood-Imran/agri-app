@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Dimensions, Image, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Image, Alert , Text} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Correct import for MaterialCommunityIcons
 import { Toast } from './components/Toast';
@@ -94,18 +92,18 @@ const SignUp = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={handleBack}>
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
       </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleMain}>{t('Create Account')}</ThemedText>
+        <  Text style={styles.titleMain}>{t('Create Account')}</  Text>
         {userType && (
-          <ThemedText style={styles.titleSub}>
-            {t('as')} <ThemedText style={styles.userType}>
+          <  Text style={styles.titleSub}>
+            {t('as')} <  Text style={styles.userType}>
               {t(userType.toLowerCase())}
-            </ThemedText>
-          </ThemedText>
+            </  Text>
+          </  Text>
         )}
       </View>
       <View style={styles.form}>
@@ -132,7 +130,7 @@ const SignUp = () => {
           leftIcon={
             <View style={[styles.iconContainer, { flexDirection: 'row', alignItems: 'center' }]}>
               <Image source={require('../assets/pakistan-flag.jpg')} style={styles.flagIcon} />
-              <ThemedText style={styles.countryCode}>+92</ThemedText>
+              <  Text style={styles.countryCode}>+92</  Text>
               <View style={styles.separator} />
             </View>
           }
@@ -196,9 +194,9 @@ const SignUp = () => {
         />
       </View>
       <TouchableOpacity onPress={() => router.push({ pathname: '/SignIn', params: { userType } })}>
-        <ThemedText style={styles.signInText}>
-          {t('Already Have Account')} <ThemedText style={styles.signInHighlight}>{t('Sign In')}</ThemedText>
-        </ThemedText>
+        <  Text style={styles.signInText}>
+          {t('Already Have Account')} <  Text style={styles.signInHighlight}>{t('Sign In')}</  Text>
+        </  Text>
       </TouchableOpacity>
       <Toast 
         visible={toastVisible}
@@ -206,7 +204,7 @@ const SignUp = () => {
         type="error"
         onHide={() => setToastVisible(false)}
       />
-    </ThemedView>
+    </  View>
   );
 };
 

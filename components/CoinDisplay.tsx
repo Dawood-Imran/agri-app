@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { ThemedText } from './ThemedText';
 
 interface CoinDisplayProps {
   coins: number;
@@ -11,7 +10,7 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins }) => {
   return (
     <View style={styles.container}>
       <Icon name="coins" type="font-awesome-5" color="#FFC107" size={20} />
-      <ThemedText style={styles.coinText}>{coins}</ThemedText>
+      <  Text style={styles.coinText}>{coins}</  Text>
     </View>
   );
 };

@@ -1,9 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Dimensions , Text} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -20,7 +18,7 @@ const LanguageSelection = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <View style={styles.topSection}>
         <Image 
           source={require('../assets/images/illustration-1.png')}
@@ -31,8 +29,8 @@ const LanguageSelection = () => {
 
       <View style={styles.bottomSection}>
         <View style={styles.titleContainer}>
-          <ThemedText style={styles.titleEnglish}>Select Language</ThemedText>
-          <ThemedText style={styles.titleUrdu}>زبان منتخب کریں</ThemedText>
+          <  Text style={styles.titleEnglish}>Select Language</  Text>
+          <  Text style={styles.titleUrdu}>زبان منتخب کریں</  Text>
         </View>
         
         <View style={styles.buttonContainer}>
@@ -43,7 +41,7 @@ const LanguageSelection = () => {
             <View style={styles.buttonContent}>
               <MaterialCommunityIcons name="web" size={24} color="#1B5E20" />
               <View style={styles.buttonTextContainer}>
-                <ThemedText style={styles.buttonTextEnglish}>English</ThemedText>
+                <  Text style={styles.buttonTextEnglish}>English</  Text>
                 
               </View>
               <MaterialCommunityIcons name="chevron-right" size={24} color="#1B5E20" />
@@ -57,7 +55,7 @@ const LanguageSelection = () => {
             <View style={styles.buttonContent}>
               <MaterialCommunityIcons name="web" size={24} color="#1B5E20" />
               <View style={styles.buttonTextContainer}>
-                <ThemedText style={styles.buttonTextUrdu}>اردو</ThemedText>
+                <  Text style={styles.buttonTextUrdu}>اردو</  Text>
                 
               </View>
               <MaterialCommunityIcons name="chevron-right" size={24} color="#1B5E20" />
@@ -65,7 +63,7 @@ const LanguageSelection = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </ThemedView>
+    </  View>
   );
 };
 

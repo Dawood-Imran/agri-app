@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Alert , Text} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 import { Toast } from './components/Toast';
 
@@ -33,16 +31,16 @@ const VerifyPin = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={handleBack}>
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
       </TouchableOpacity>
       
       <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleMain}>{t('Verify PIN')}</ThemedText>
-        <ThemedText style={styles.titleSub}>
+        <  Text style={styles.titleMain}>{t('Verify PIN')}</  Text>
+        <  Text style={styles.titleSub}>
           {t('Enter the PIN sent to your phone')}
-        </ThemedText>
+        </  Text>
       </View>
 
       <View style={styles.form}>
@@ -87,7 +85,7 @@ const VerifyPin = () => {
         type="error"
         onHide={() => setToastVisible(false)}
       />
-    </ThemedView>
+    </  View>
   );
 };
 

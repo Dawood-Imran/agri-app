@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Image, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Image, Alert , Text} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Input, Button, Icon } from 'react-native-elements';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
 import { useTranslation } from 'react-i18next';
 
 const ForgotPin = () => {
@@ -55,16 +53,16 @@ const ForgotPin = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <  View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={handleBack}>
         <Icon name="arrow-back" type="material" color="#FFC107" size={30} />
       </TouchableOpacity>
       
       <View style={styles.titleContainer}>
-        <ThemedText style={styles.titleMain}>{t('Forgot PIN')}</ThemedText>
-        <ThemedText style={styles.titleSub}>
+        <  Text style={styles.titleMain}>{t('Forgot PIN')}</  Text>
+        <  Text style={styles.titleSub}>
           {t('Enter your registered phone number')}
-        </ThemedText>
+        </  Text>
       </View>
 
       <View style={styles.form}>
@@ -77,7 +75,7 @@ const ForgotPin = () => {
             leftIcon={
               <View style={[styles.iconContainer, { flexDirection: 'row', alignItems: 'center' }]}>
                 <Image source={require('../assets/pakistan-flag.jpg')} style={styles.flagIcon} />
-                <ThemedText style={styles.countryCode}>+92</ThemedText>
+                <  Text style={styles.countryCode}>+92</  Text>
                 <View style={styles.separator} />
               </View>
             }
@@ -99,7 +97,7 @@ const ForgotPin = () => {
           titleStyle={styles.buttonTitle}
         />
       </View>
-    </ThemedView>
+    </  View>
   );
 };
 

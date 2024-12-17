@@ -87,11 +87,7 @@ const FarmerDashboard = () => {
     >
       <Tab.Screen name={t('menu')} component={MenuTab} />
       <Tab.Screen name={t('account')} component={AccountTab} />
-      {/* <Tab.Screen 
-        name="Coins" 
-        component={CoinScreen} 
-        options={{ tabBarButton: () => null }}
-      /> */}
+      
     </Tab.Navigator>
   );
 };
