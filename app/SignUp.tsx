@@ -107,6 +107,7 @@ const SignUp = () => {
         )}
       </View>
       <View style={styles.form}>
+        <Text style={[styles.label, isRTL && styles.labelRTL]}>{t('Name')}</Text>
         <Input
           placeholder={t('Name')}
           onChangeText={setName}
@@ -122,6 +123,7 @@ const SignUp = () => {
           inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
         />
+        <Text style={[styles.label, isRTL && styles.labelRTL]}>{t('Phone Number')}</Text>
         <Input
           placeholder="3XXXXXXXXX"
           onChangeText={validatePhoneNumber}
@@ -141,6 +143,7 @@ const SignUp = () => {
           errorMessage={errorMessage}
           errorStyle={styles.errorText}
         />
+        <Text style={[styles.label, isRTL && styles.labelRTL]}>{t('Pin Code')}</Text>
         <Input
           placeholder={t("Enter Pin Code")}
           onChangeText={(text) => {
@@ -163,6 +166,7 @@ const SignUp = () => {
           inputStyle={styles.inputText}
           placeholderTextColor="#E0E0E0"
         />
+        <Text style={[styles.label, isRTL && styles.labelRTL]}>{t('Confirm Pin Code')}</Text>
         <Input
           placeholder={t("Confirm Pin Code")}
           onChangeText={(text) => {
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#61B15A',
   },
   titleContainer: {
-    marginBottom: 40,
+    marginBottom: 20,
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingTop: 30,
@@ -239,7 +243,7 @@ const styles = StyleSheet.create({
     color: '#FFC107',
     fontWeight: 'bold',
     fontSize: 32,
-    marginTop: 5,
+    
     paddingVertical: 10,
     lineHeight: 45,
     paddingHorizontal: 15,
@@ -247,12 +251,12 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '100%',
-    marginBottom: 20,
+    
   },
   inputContainer: {
     borderBottomWidth: 0,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 25,
+    borderRadius: 15,
     paddingHorizontal: 15,
     
     height: 50,
@@ -278,6 +282,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
+  labelRTL: {
+    textAlign: 'right', 
+    marginRight: 10,
+  },
   signInText: {
     color: '#FFFFFF',
     marginTop: 20,
@@ -287,7 +295,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 40,
+    top: 20,
     left: 20,
     zIndex: 1,
     backgroundColor: 'white',
@@ -330,6 +338,11 @@ const styles = StyleSheet.create({
   inputWrapper: {
     width: '100%',
     paddingHorizontal: 0,
+  },
+  label: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    marginBottom: 5,
   },
 });
 

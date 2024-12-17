@@ -112,6 +112,7 @@ const SignIn = () => {
         )}
       </View>
       <View style={styles.form}>
+        <Text style={[styles.label, isRTL && styles.labelRTL]}>{t('Phone Number')}</Text>
         <View style={styles.inputContainer}>
           <Input
             placeholder="3XXXXXXXXX"
@@ -134,6 +135,7 @@ const SignIn = () => {
             errorStyle={styles.errorText}
           />
         </View>
+        <Text style={[styles.label, isRTL && styles.labelRTL]}>{t('Pin Code')}</Text>
         <View style={styles.inputContainer}>
           <Input
             placeholder={t("Enter Pin Code")}
@@ -249,7 +251,7 @@ const styles = StyleSheet.create({
   inputField: {
     borderBottomWidth: 0,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 25,
+    borderRadius: 15,
     paddingHorizontal: 15,
     marginBottom: 10,
     height: 50,
@@ -334,6 +336,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textDecorationLine: 'underline',
     textDecorationColor: '#FFC107',
+  },
+  label: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  labelRTL: {
+    textAlign: 'right', // Align text to the right for Urdu
+    marginRight: 10,
   },
 });
 
